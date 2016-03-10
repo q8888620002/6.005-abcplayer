@@ -50,11 +50,12 @@ public class Header implements Sequence{
 	/**
 	 * method for visitor to process the object 
 	 */
+
 	public void accept(Visitor v) {
-		
-		// TODO Auto-generated method stub
-	
+		v.visit(this);
 	}
+	
+	
 
 
 	/**

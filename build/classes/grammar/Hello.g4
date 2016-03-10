@@ -48,7 +48,7 @@ DURATION: DIGIT+ | FRACTION ;
 FRACTION:(DIGIT+)? SLASH (DIGIT+)?; 
 BARLINE: (WS?)('|' | '||' | '[|' | '|]' | ':|' | '|:')(WS?);
 NTH_REPEAT :('[1' | '[2');
-TUPLET: (WS)?'('('2'|'3'|'4')PITCH+ ;
+TUPLET: (WS)?'('('2'|'3'|'4')(PITCH+|CHORDS|NOTE)+;
 
 PITCH :  ACCIDENTAL? BASENOTE OCTAVE?;
 OCTAVE: ('\''|',')+;
@@ -72,7 +72,7 @@ EOL: NEWLINE|COMMENT;
 SLASH:'/' ;
 DIGIT: [0-9];
 CHARACTER:'.'|'/'|',';
-NEWLINE:[\n] ;
+NEWLINE:[\n]+ ;
 SPACE:[ \t]+-> skip ;
 SYMBOL :':';
 WS : [ \t\r\n]+ ; // skip spaces, tabs, newlines

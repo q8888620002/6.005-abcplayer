@@ -4,9 +4,8 @@ package music;
 import sound.Pitch;
 
 /*
- * A key object represent the Key in the header of an ABC music  
- * and specifies accidental to some of notes. 
- *  
+ * A key object specifies accidental, octave, or minor to some of notes element 
+ * in the music part. It also represents the Key_field in the header 
  */
 public class Key {
 	private final Pitch pitch;
@@ -78,10 +77,24 @@ public class Key {
 	}
 	
 	/**
+	 * @return a Pitch that can be added to SequencePlayer
+	 */
+	
+	public Pitch getPitch(){
+		return pitch;
+	}
+	
+	
+	/**
 	 * @return a String representation of a Key object 
 	 */
-	public String getKey(){
-		return pitch.toString()+modeMinor;
+	@Override
+	public String toString(){
+		if(modeMinor!=null){
+			return pitch.toString()+ modeMinor;
+		}else{
+			return pitch.toString();
+		}
 	}
 	
 	

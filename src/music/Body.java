@@ -1,5 +1,7 @@
 package music;
-
+/*
+ *  this is a immutable 
+ */
 public class Body implements Sequence {
 
 	@Override

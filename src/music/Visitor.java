@@ -2,7 +2,7 @@ package music;
 
 
 /*
- * the interface that all vivoiditor have to implement
+ * The "Visitor" interface, as described in the Visitor Pattern
  */
 public interface Visitor {
 	public void visit(Song s);

@@ -12,17 +12,13 @@ public class SequenceVisitor implements Visitor{
 	public void visit(Song s) {
 		// TODO Auto-generated method stub
 		s.getHeader().accept(this);
-	}
-
-	private void SequencePlayer(Sequence s) {
-		// TODO Auto-generated method stub
-		s.accept((Visitor) s);
+		s.getBody().accept(this);
 	}
 
 	@Override
 	public void visit(Header h) {
 		// TODO Auto-generated method stub
-	
+		
 	}
 
 	@Override
