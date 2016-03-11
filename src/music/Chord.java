@@ -31,6 +31,15 @@ public class Chord implements Music, Sequence {
 	}
 	
 	/**
+	 * Construct a new chord object  
+	 * @param a List of Notes 
+	 */
+	public Chord(List<Note> newN) {
+		this.notes = newN;
+		this.duration = notes.get(0).getDuration();
+	}
+
+	/**
 	 * 
 	 * @return a list of single notes which can be added to SequencePlayer
 	 */
@@ -69,6 +78,15 @@ public class Chord implements Music, Sequence {
 	@Override
 	public Duration getDuration() {
 		return duration;
+	}
+
+	@Override
+	public Chord changeDuration(int denominator) {
+		List<Note> newN = new ArrayList<Note>();
+		for(Note n:notes){
+			newN.add(n.changeDuration(denominator));
+		}
+			return new Chord(newN);
 	}
 
 

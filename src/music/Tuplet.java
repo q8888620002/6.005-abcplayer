@@ -1,6 +1,7 @@
 package music;
 /*
  *  A Tuplet contains a group of Notes/chords 
+
  *  which are played successfully with same duration.
  *  
  *  Rep invariant:
@@ -11,7 +12,7 @@ package music;
  *   			DUPLET
  *   			TRIPLET
  *   			QUADRUPLET
- *   	
+ *   			
  */
 
 import java.util.ArrayList;
@@ -19,19 +20,31 @@ import java.util.List;
 
 public class Tuplet implements Music,Sequence{
 	private final  List<Music> musics;
-	private final Duration duration;
 	private final TupletType type;
 	
+	/**
+	 * Construct a new Tuplet class with group of music & type of tuplet  
+	 * @param type DIPLET, TRIPLET, QUADRUTUPLET 
+	 * @param music NOTE or CHORD 
+	 */
 	public Tuplet(TupletType type, Music...music){
 		List<Music> musics = new ArrayList<Music>();
 		for(Music m: music){
-			musics.add(m);
+			musics.add(m.changeDuration(type.size()));
 		}
 		this.musics = musics;
 		this.type = type;
 	}
 	
-	
+	/**
+	 * Construct a new Tuplet class with List of music & type of tuplet  
+	 * @param type DIPLET, TRIPLET, QUADRUTUPLET 
+	 * @param music NOTE or CHORD 
+	 */
+	private Tuplet(TupletType type, List<Music>musics){
+		this.musics = musics;
+		this.type = type;
+	}
 	
 	/**
 	 * 
@@ -40,6 +53,14 @@ public class Tuplet implements Music,Sequence{
 	
 	public String getType(){
 		return type.toString();
+	}
+	
+	/**
+	 * for debug usage
+	 * @return a List of music 
+	 */
+	public List<Music> getMusic(){
+		return musics;
 	}
 	
 	/**
@@ -59,6 +80,33 @@ public class Tuplet implements Music,Sequence{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	/**
+	 * Change the representation of duration in musics.
+	 * 
+	 * @param the integer denominator of this tuplet.
+	 * @return a new Tuplet containing a List of music. 
+	 */
+
+	@Override
+	public Tuplet changeDuration(int denominator) {
+		List<Music> newL = new ArrayList<Music>();
+		for(Music m: musics){
+			newL.add(m.changeDuration(denominator));
+		}
+		return new Tuplet(type, newL);
+	}
 	
+	
+	/**
+	 * @return a string representation of a tuplet 
+	 */
+	public String toString(){
+		String tuplet = type.toString();
+		for(Music m: musics){
+			tuplet+=m.toString();
+		}
+		return tuplet;
+	}
 	
 }

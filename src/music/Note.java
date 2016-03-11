@@ -32,17 +32,6 @@ public class Note implements Music,Sequence{
 		
 		
 		/**
-		 * Generate a new note object with same duration value but 
-		 *  		different denominator & numerator representation.
-		 * @param different denominator
-		 * @return new Note 
-		 */
-		public Note changeDura(int denominator){
-			Duration newD = duration.getLCD(denominator); 
-			return new Note(key,newD);
-		}
-		
-		/**
 		 * @return a Key that can be added to SequencePlayer.
 		 */
 		public Key getKey(){
@@ -59,6 +48,22 @@ public class Note implements Music,Sequence{
 		
 		
 		/**
+		 * Generate a new note object with same duration value but 
+		 *  		different denominator & numerator representation.
+		 * @param different denominator
+		 * @return new Note 
+		 */
+		@Override
+		public Note changeDuration(int denominator) {
+			Duration newD = duration.getLCD(denominator); 
+			return new Note(key,newD);
+		}
+
+		@Override
+		public void accept(Visitor s) {
+			s.visit(this);
+		}
+		/**
 		 * @return a String representation of this note/rest
 		 */
 		public String toString() {
@@ -71,10 +76,4 @@ public class Note implements Music,Sequence{
 			}
 		}
 
-		@Override
-		public void accept(Visitor s) {
-			s.visit(this);
-		}
-
-		
 }

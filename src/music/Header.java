@@ -1,20 +1,19 @@
 package music;
 
-
-
-import org.antlr.v4.parse.ANTLRParser.ruleReturns_return;
-
 /*
- * A header is immutable It stores the attributes of an ABC music 
+ * A header stores the attributes of an ABC music 
  * such as tempo, key, default length, etc.  
+ * 		Rep invariant:
+ * 			It is immutable.
+ * 			all the fields are final 
  */
 public class Header implements Sequence{
 
 	private final int index;
 	private final String title;
 	private final String composer;
-	private final Fraction default_length;
-	private final Fraction meter;
+	private final Duration default_length;
+	private final Duration meter;
 	private final int tempo;
 	private final Key Key;
 	private final Voice voice;
@@ -32,7 +31,7 @@ public class Header implements Sequence{
 	 * @param K, determines the key signature for the piece, a Key obj 
 	 */
 	public Header(Integer X, String T,String C
-			,Fraction L,Fraction M,Integer Q,Key K,Voice V){
+			,Duration L,Duration M,Integer Q,Key K,Voice V){
 		
 		this.index = X;
 		this.composer = C;
@@ -54,9 +53,6 @@ public class Header implements Sequence{
 	public void accept(Visitor v) {
 		v.visit(this);
 	}
-	
-	
-
 
 	/**
 	 * 
@@ -78,14 +74,14 @@ public class Header implements Sequence{
 	 * 
 	 */
 
-	public Fraction getLength() {
+	public Duration getLength() {
 		return default_length;
 	}
 	
 	/**
 	 * @return meter of the song 
 	 */
-	public Fraction getMeter() {
+	public Duration getMeter() {
 		return meter;
 	}
 	
