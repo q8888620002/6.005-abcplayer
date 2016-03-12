@@ -1,7 +1,6 @@
 package music;
 /*
  *  A Tuplet contains a group of Notes/chords 
-
  *  which are played successfully with same duration.
  *  
  *  Rep invariant:
@@ -24,8 +23,9 @@ public class Tuplet implements Music,Sequence{
 	
 	/**
 	 * Construct a new Tuplet class with group of music & type of tuplet  
+	 * the size of music should be the same as tuplettype
 	 * @param type DIPLET, TRIPLET, QUADRUTUPLET 
-	 * @param music NOTE or CHORD 
+	 * @param array music NOTE or CHORD 
 	 */
 	public Tuplet(TupletType type, Music...music){
 		List<Music> musics = new ArrayList<Music>();
@@ -34,6 +34,8 @@ public class Tuplet implements Music,Sequence{
 		}
 		this.musics = musics;
 		this.type = type;
+		
+		checkRep();
 	}
 	
 	/**
@@ -44,6 +46,16 @@ public class Tuplet implements Music,Sequence{
 	private Tuplet(TupletType type, List<Music>musics){
 		this.musics = musics;
 		this.type = type;
+		
+		checkRep();
+	}
+	
+	/**
+	 * check rep of Tuplet
+	 */
+	private void checkRep(){
+		assert (type.size()== musics.size()):
+			"number of music element should be the same as type declared";
 	}
 	
 	/**

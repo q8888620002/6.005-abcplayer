@@ -3,31 +3,47 @@ package music;
 import java.util.List;
 
 /*
- *  A Measure represents a group of music elements(Notes, Chords, Tuplet)
- *   between two bars.
- *   	Rep invariant: 
- */
+ *  A Measure is composed a group of music elementssuch as Notes, Chords, Tuplet.
+ *  Sometimes also referred to as a bar.
+ *   	Rep invariant:
+ *   		Measure is immutable.
+ *   		music is final. 
+ */			
 public class Measure implements Sequence{
 		private final List<Music> music;
-		private final Boolean repeat;
-		private final int Sequence;
-		
-		
 		
 		/**
-		 * Construct a Measure object 
+		 * Construct a Measure object	 
 		 */
-		public Measure(Boolean repeat,List<Music> musics) {
-				this.repeat = repeat;
-				this.music = musics;
-				
+		public Measure(List<Music> musics) {
+				this.music = musics;		
+		}
+		
+		/**
+		 * Getter method of the measure elements 
+		 * @return a List of music elements 
+		 */
+		public List<Music> getMeasures(){
+			return music;
 		}
 		
 		
 		@Override
 		public void accept(Visitor s) {
-			// TODO Auto-generated method stub
-			
+			s.visit(this);
+		}
+		
+		/**
+		 * @return a string representation of measure
+		 */
+		public String toString(){
+			StringBuilder s = new StringBuilder();
+		    s.append("| ");
+			for(Music m: music){
+				s.append(m.toString()).append(" ");
+			}
+			s.append("|");
+			return s.toString();
 		}
 		
 }
