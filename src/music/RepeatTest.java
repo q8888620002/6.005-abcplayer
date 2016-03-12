@@ -1,5 +1,7 @@
 package music;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +43,14 @@ public class RepeatTest {
 		meas.add(measure);
 		
 		Repeat repeat =  new Repeat(meas);
+		assertEquals("|: [A1/3E1/3^C1/3] (3A1/3E1/3^C1/3 (2B2/6B2/6 |[A1/3E1/3^C1/3] (3A1/3E1/3^C1/3 (2B2/6B2/6 |",
+				repeat.toString());
+		
 	}
 	
 	
 	/*
-	 *  construct a repeat element
+	 *  construct a repeat section with an alternative ending
 	 */
 	@Test
 	public void RepeatAlternativeTest1(){
@@ -56,7 +61,6 @@ public class RepeatTest {
 		Measure measure = new Measure(musics);
 		List<Measure> meas = new ArrayList<Measure>();
 		meas.add(measure);
-		System.out.println(meas.toString());
 		
 		//ending1
 		List<Music> ending1 = new ArrayList<Music>();
@@ -65,7 +69,6 @@ public class RepeatTest {
 		Measure measure2= new Measure(ending1);
 		List<Measure> ending = new ArrayList<Measure>();
 		ending.add(measure2);
-		System.out.println(measure2);
 		
 		
 		//ending2
@@ -73,11 +76,14 @@ public class RepeatTest {
 		ending2.add(tupletAAA);
 		ending2.add(AChord);
 		Measure measure3= new Measure(ending2);				
-		System.out.println(measure3.toString());
+		
 		ending.add(measure3);
 				
+	
 		
 		Repeat repeat =  new Repeat(meas,ending);
-		System.out.println(repeat.toString());
+		assertEquals("|: [A1/3E1/3^C1/3] (3A1/3E1/3^C1/3 (2B2/6B2/6 |(2^C2/6B2/6 [A1/3E1/3^C1/3] |"
+				+ "[A1/3E1/3^C1/3] (3A1/3E1/3^C1/3 (2B2/6B2/6 |(3A1/3A1/3A1/3 [A1/3E1/3^C1/3] |",
+				repeat.toString());
 	}
 }

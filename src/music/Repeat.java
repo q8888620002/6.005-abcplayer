@@ -17,9 +17,7 @@ public class Repeat implements Sequence{
      *    ending means the alternative ending measures
 	 */
 	private final List<Measure> meas;
-	private final List<Measure> endings;
 
-	
 	/**
 	 * Constructor of the repeat object 
 	 * @param the list of measures to be repeated without alternative ending 
@@ -28,8 +26,8 @@ public class Repeat implements Sequence{
 		List<Measure> list= new ArrayList<Measure>();
 		list.addAll(measues);
 		list.addAll(measues);
+		
 		this.meas = list;
-		this.endings = null;
 	}
 	
 	/**
@@ -37,21 +35,20 @@ public class Repeat implements Sequence{
 	 * @param list of measures to be repeated 
 	 * @param the alternative ending of the repetition
 	 */
-	public Repeat(List<Measure> measues, List<Measure>alternative){
-		List<Measure> l = measues;
+	public Repeat(List<Measure> measues, List<Measure> alternative){
+		List<Measure> l = new ArrayList<Measure>();
 		
-		for(int i =0; i < alternative.size()-1;i++  ){
-			l.add(alternative.get(i));
+		for(int i =0; i < alternative.size();i++  ){
 			l.addAll(measues);
+			l.add(alternative.get(i));
 		}
 		
-		this.meas = measues;
-		this.endings = alternative;
+		this.meas = l;
 	}
 	
 	/**
 	 * Getter method for the repeat 
-	 * @return a List of measures of th repetition
+	 * @return a List of measures of the repetition
 	 */
 	public List<Measure> getRepeat(){
 		return meas;
@@ -62,7 +59,6 @@ public class Repeat implements Sequence{
 	 */
 	@Override
 	public void accept(Visitor visitor) {
-		// TODO Auto-generated method stub
 		visitor.visit(this);
 	}
 	

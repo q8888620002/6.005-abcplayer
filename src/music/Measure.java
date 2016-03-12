@@ -3,7 +3,7 @@ package music;
 import java.util.List;
 
 /*
- *  A Measure is composed a group of music elementssuch as Notes, Chords, Tuplet.
+ *  A Measure is composed a group of music elements such as Notes, Chords, Tuplet.
  *  Sometimes also referred to as a bar.
  *   	Rep invariant:
  *   		Measure is immutable.
