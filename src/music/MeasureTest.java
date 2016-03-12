@@ -31,7 +31,7 @@ public class MeasureTest {
 		musics.add(tupletBB);
 		
 		Measure measure = new Measure(musics);
-
+		System.out.println(measure.toString());
 	}
 	
 	

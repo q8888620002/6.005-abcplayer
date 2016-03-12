@@ -6,7 +6,7 @@ import java.util.List;
 
 /*
  *  A type representing a chord, which is simply a group of 
- * notes played simultaneously within the same voice.
+ * notes played simultaneously.
  * 
  * Rep invariant :
  * 	The class is immutable.
@@ -38,16 +38,49 @@ public class Chord implements Music, Sequence {
 		this.notes = newN;
 		this.duration = notes.get(0).getDuration();
 	}
-
+	
+	
 	/**
+	 * Construct a Chord class with multiple keys and duration 
 	 * 
+	 * @param List of Keys 
+	 * @param duration of the chord
+	 */
+	public Chord(List<Key> keys,Duration d){
+		List<Note> list = new ArrayList<Note>();
+		for(Key k:keys){
+			list.add(new Note(k,d));
+		}
+		this.notes = list;
+		this.duration = d;
+	}
+	
+	
+	/**
+	 * Getter method for Notes in the chord
 	 * @return a list of single notes which can be added to SequencePlayer
 	 */
 	public List<Note> getNotes(){
 		return notes;
 	}
 	
-	
+	/**
+	 * @return duration of this chord
+	 */
+	@Override
+	public Duration getDuration() {
+		return duration;
+	}
+
+	@Override
+	public Chord changeDuration(int denominator) {
+		List<Note> newN = new ArrayList<Note>();
+		for(Note n:notes){
+			newN.add(n.changeDuration(denominator));
+		}
+			return new Chord(newN);
+	}
+
 	
 	/**
 	 * visitor method for sequence Visitor	
@@ -71,24 +104,6 @@ public class Chord implements Music, Sequence {
 		}
 		return chord+"]";
 	}
-
-	/**
-	 * @return duration of this chord
-	 */
-	@Override
-	public Duration getDuration() {
-		return duration;
-	}
-
-	@Override
-	public Chord changeDuration(int denominator) {
-		List<Note> newN = new ArrayList<Note>();
-		for(Note n:notes){
-			newN.add(n.changeDuration(denominator));
-		}
-			return new Chord(newN);
-	}
-
 
 	
 	

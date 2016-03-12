@@ -97,4 +97,15 @@ public class Duration {
 		public String toString() {
 			return numerator+"/"+denominator;
 		}
+		
+		/**
+		 * 
+		 */
+		public Boolean equals(Duration otherDura){
+			if((denominator== otherDura.getDenominator())&(numerator==otherDura.getNumerator())){
+				return true;
+			}else{
+				return false;
+			}
+		}
 }

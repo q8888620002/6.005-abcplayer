@@ -8,6 +8,7 @@ package music;
  *  		
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Repeat implements Sequence{
@@ -24,8 +25,10 @@ public class Repeat implements Sequence{
 	 * @param the list of measures to be repeated without alternative ending 
 	 */
 	public Repeat(List<Measure> measues){
-		measues.addAll(measues);
-		this.meas = measues;
+		List<Measure> list= new ArrayList<Measure>();
+		list.addAll(measues);
+		list.addAll(measues);
+		this.meas = list;
 		this.endings = null;
 	}
 	
@@ -37,7 +40,7 @@ public class Repeat implements Sequence{
 	public Repeat(List<Measure> measues, List<Measure>alternative){
 		List<Measure> l = measues;
 		
-		for(int i =0; i <= alternative.size();i++  ){
+		for(int i =0; i < alternative.size()-1;i++  ){
 			l.add(alternative.get(i));
 			l.addAll(measues);
 		}
@@ -67,9 +70,11 @@ public class Repeat implements Sequence{
 	 * @return a string representation of the Repeat 
 	 */
 	public String toString(){
-		
+		StringBuilder s = new StringBuilder();
+		s.append("|: ");
+		for(Measure m: meas){
+			s.append(m.toString());
+		}
+		return s.toString();
 	}
-	
-	
-	 
 }

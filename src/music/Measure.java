@@ -38,7 +38,6 @@ public class Measure implements Sequence{
 		 */
 		public String toString(){
 			StringBuilder s = new StringBuilder();
-		    s.append("| ");
 			for(Music m: music){
 				s.append(m.toString()).append(" ");
 			}

@@ -17,7 +17,7 @@ public class TupletTest {
 	 */
 	@Test
 	public void InitDupletTest(){
-		Duration duration = new Duration(2,2);
+		Duration duration = new Duration(1,3);
 		Note n = new Note(bKey, duration);
 		Tuplet tuplet = new Tuplet(TupletType.DUPLET, n,n);
 		

@@ -7,6 +7,7 @@ package music;
  *   	This class is immutable.
  *   	the list of notes is final 
  *   	tuplet-type is final 
+ *   	all music duration within the tuplet should be the same 
  *   	TupletType should be :
  *   			DUPLET
  *   			TRIPLET
@@ -23,7 +24,7 @@ public class Tuplet implements Music,Sequence{
 	
 	/**
 	 * Construct a new Tuplet class with group of music & type of tuplet  
-	 * the size of music should be the same as tuplettype
+	 * the size of music should be the same as tuplet-type
 	 * @param type DIPLET, TRIPLET, QUADRUTUPLET 
 	 * @param array music NOTE or CHORD 
 	 */
@@ -54,6 +55,11 @@ public class Tuplet implements Music,Sequence{
 	 * check rep of Tuplet
 	 */
 	private void checkRep(){
+		for(int i=0;i < musics.size()-1 ;i++){
+			assert(musics.get(i).getDuration().equals(musics.get(i+1).getDuration())):
+				"All duration whthin the tuplet should be the same";
+		}
+		
 		assert (type.size()== musics.size()):
 			"number of music element should be the same as type declared";
 	}
