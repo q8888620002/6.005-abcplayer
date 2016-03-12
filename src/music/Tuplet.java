@@ -119,6 +119,7 @@ public class Tuplet implements Music,Sequence{
 	/**
 	 * @return a string representation of a tuplet 
 	 */
+	@Override
 	public String toString(){
 		String tuplet = type.toString();
 		for(Music m: musics){

@@ -21,8 +21,6 @@ public class Voice implements Sequence{
 				this.voiceNum = VoiceNumber;
 		}
 
-
-		
 		/**
 		 * Getter method for measure of the Voice 
 		 * @return measures of the Voice
@@ -39,9 +37,26 @@ public class Voice implements Sequence{
 			return voiceNum;
 		}
 		
+		/**
+		 * Visitor method for visitor to process a Voice
+		 */
 		@Override
 		public void accept(Visitor s) {
-			// TODO Auto-generated method stub
+			s.visit(this);
 			
+		}
+		
+		/**
+		 * @return a string a representation of Voice
+		 */
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append("V:"+voiceNum+"\n");
+			for(Measure m: musics){
+				s.append(m.toString());
+				s.append("\n");
+			}
+			return s.toString();
 		}
 }	

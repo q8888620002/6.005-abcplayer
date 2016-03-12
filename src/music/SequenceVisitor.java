@@ -8,11 +8,9 @@ import sound.SequencePlayer;
 public class SequenceVisitor implements Visitor{
 	private SequencePlayer player;
 	
-	@Override
 	public void visit(Song s) {
 		// TODO Auto-generated method stub
 		s.getHeader().accept(this);
-		s.getBody().accept(this);
 	}
 
 	@Override
@@ -21,11 +19,6 @@ public class SequenceVisitor implements Visitor{
 		
 	}
 
-	@Override
-	public void visit(Body b) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void visit(Voice v) {
@@ -58,9 +51,10 @@ public class SequenceVisitor implements Visitor{
 	}
 
 	@Override
-	public void visit(Rest r) {
+	public void visit(Repeat repeat) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }

@@ -1,51 +1,65 @@
 package music;
 
+import java.util.List;
+
 /*
  * this is the immutable, a top class that represents an ABC music
  * also an output of a Tree Visitor & an input of ToPitch Visitor.
  *  It is consist of header and body.    
+ *  	Rep invariant:
+ *  		Song is immutable.
+ *    		header is final.
+ *    		voices is final as well.
  */
 
 
 public class Song implements Sequence{
 	
 		private final Header header;
-		private final Body body;
+		private final List<Voice> voices;
 		
 		/**
 		 * Generate a new Song Object
 		 * @param header which contains field info such as index, composer, etc.
 		 * @param body refers to the Body datatype containing list of Voice
 		 */
-		public Song(Header header, Body body) {
-			this.body = body;
+		
+		public Song(Header header, List<Voice> voices) {
 			this.header = header;
+			this.voices = voices;
 		}
 		
 		/**
-		 * Observor of the song object
+		 * Getter method of header of the song object
 		 * @return header of the song object
 		 */
 		
 		public Header getHeader() {
-			return this.header;
-		}
-		/**
-		 * Observor of the song object
-		 * @return body of the song object
-		 */
-		public Body getBody(){
-			return this.body;
+			return header;
 		}
 		
 		/**
-		 * method that allows visitor to process the object
+		 * Getter method of the voices in the music
+		 * @return list of voices
 		 */
-		public void accept(Visitor v) {
-			// TODO Auto-generated method stub
-			v.visit(this);
-			v.visit(body);
-			v.visit(header);
+		public List<Voice> getVoices(){
+			return voices;
+		}
+		
+		/**
+		 * method for visitor to process Song
+		 */
+		@Override
+		public void accept(Visitor s) {
+			s.visit(header);
+		}
+	
+		/**
+		 * @return string representation of the Song
+		 */
+		@Override 
+		public String toString(){
+			return header.toString()+"\n"+voices.toString();
 		}
 		
 		

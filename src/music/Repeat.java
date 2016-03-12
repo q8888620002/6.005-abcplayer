@@ -65,6 +65,7 @@ public class Repeat implements Sequence{
 	/**
 	 * @return a string representation of the Repeat 
 	 */
+	@Override
 	public String toString(){
 		StringBuilder s = new StringBuilder();
 		s.append("|: ");
