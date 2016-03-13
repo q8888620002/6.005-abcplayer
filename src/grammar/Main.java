@@ -14,14 +14,15 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class Main {
 
 	public static void main(String[] strings) throws IOException {
-		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("debussy.abc"));
+		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("little_night_music.abc"));
 		HelloLexer lexer = new HelloLexer(inputStream);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		HelloParser parser = new HelloParser(tokens);
-		
+			
 		ParseTree tree = parser.abc_tune();
 		System.out.println(tree.toStringTree(parser));
-		new ASTvisitor().visit(tree);
+		ASTvisitor visitor  = new ASTvisitor();
+		visitor.visit(tree);
 		}
 	
 	

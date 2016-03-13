@@ -14,7 +14,7 @@ public class Header implements Sequence{
 	private final Duration default_length;
 	private final Duration meter;
 	private final int tempo;
-	private final Character Key;
+	private final String Key;
 	private final String voice;
 	
 	
@@ -31,7 +31,7 @@ public class Header implements Sequence{
 	 * @param K, determines the key signature for the piece, a Key obj 
 	 */
 	public Header(int X, String T,String C
-			,Duration L,Duration M,Integer Q,String V,Character K){
+			,Duration L,Duration M,Integer Q,String V,String K){
 		
 		this.index = X;
 		this.title = T;
@@ -48,7 +48,7 @@ public class Header implements Sequence{
 	 * @param all fields except Voice
 	 */
 	public Header(int X, String T,String C
-			,Duration L,Duration M,Integer Q,Character K){
+			,Duration L,Duration M,Integer Q,String K){
 		
 		this.index = X;
 		this.title = T;
@@ -65,7 +65,7 @@ public class Header implements Sequence{
 	 * @param all fields except composer 
 	 */
 	public Header(int X, String T
-			,Duration L,Duration M,Integer Q,String V,Character K){
+			,Duration L,Duration M,Integer Q,String V,String K){
 		
 		this.index = X;
 		this.title = T;
@@ -82,7 +82,7 @@ public class Header implements Sequence{
 	 * @param all fields but Voice and composer
 	 */
 	public Header(int X, String T
-			,Duration L,Duration M,Integer Q ,Character K){
+			,Duration L,Duration M,Integer Q ,String K){
 		
 		this.index = X;
 		this.title = T;

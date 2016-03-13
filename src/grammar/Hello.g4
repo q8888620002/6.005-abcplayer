@@ -28,16 +28,19 @@ FIELD_METER:'M:'(WS)* METER (WS)* ;
 FIELD_VOICE:'V:'(WS)* VOICE_CHANNEL (WS)* ;
 FIELD_TEMPO:'Q:'(WS)* TEMPO(WS)*  ;
 FIELD_DEFAULT_LENGTH: 'L:'(WS)* NOTE_LENGTH_STRICT (WS)* ;
-FIELD_KEY: 'K:'(WS)*KEY(WS)* ;
+FIELD_KEY: 'K:'(WS)*BASENOTE  KEY_ACCIDENTAL? MODE_MINOR?(WS)* ;
 
 
 abc_music : abc_line+;
 abc_line : element+| mid_tune_field   ;
+
 mid_tune_field: FIELD_VOICE (EOL)?;
-element : (note_element |tuplet_element |
+
+element : (note_element |tuplet_element |chord_element|
 	bar_line | nth_repeat |END |EOL)(SPACE*);
-note_element: NOTE |CHORDS;
-tuplet_element: TUPLET;
+chord_element: CHORDS;
+note_element: NOTE ;
+tuplet_element:  (WS)?(DUPLET|TRIPLET|QUADRUPLET) (PITCH+|CHORDS|NOTE)+;
 nth_repeat : NTH_REPEAT ;
 bar_line : BARLINE (EOL)? ; 
 
@@ -48,7 +51,10 @@ DURATION: DIGIT+ | FRACTION ;
 FRACTION:(DIGIT+)? SLASH (DIGIT+)?; 
 BARLINE: (WS?)('|' | '||' | '[|' | '|]' | ':|' | '|:')(WS?);
 NTH_REPEAT :('[1' | '[2');
-TUPLET: (WS)?'('('2'|'3'|'4')(PITCH+|CHORDS|NOTE)+;
+
+DUPLET : '(2';
+TRIPLET : '(3';
+QUADRUPLET : '(4';
 
 PITCH :  ACCIDENTAL? BASENOTE OCTAVE?;
 OCTAVE: ('\''|',')+;
@@ -78,7 +84,6 @@ SYMBOL :':';
 WS : [ \t\r\n]+ ; // skip spaces, tabs, newlines
 COMMENT:'%' TEXT* NEWLINE;
 
-KEY : KEY_ACCIDENTAL? BASENOTE  MODE_MINOR?;
 
 MODE_MINOR: 'm';
 KEY_ACCIDENTAL:'#' | 'b';

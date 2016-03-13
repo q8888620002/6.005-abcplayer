@@ -1,5 +1,6 @@
 package music;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -17,6 +18,13 @@ public class Measure implements Sequence{
 		 */
 		public Measure(List<Music> musics) {
 				this.music = musics;		
+		}
+		
+		/**
+		 * Construct a Measure object with an empty music list 	 
+		 */
+		public Measure() {
+				this.music = new ArrayList<Music>();		
 		}
 		
 		/**

@@ -7,6 +7,7 @@ package music;
  * 			Measures and voice number are final.
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Voice implements Sequence{
@@ -21,6 +22,14 @@ public class Voice implements Sequence{
 				this.voiceNum = VoiceNumber;
 		}
 
+		/**
+		 * Constructor of a Voice class
+		 * @param index of Voice.
+		 */
+		public Voice( int VoiceNumber) {
+				this.musics = new ArrayList<Measure>();
+				this.voiceNum = VoiceNumber;
+		}
 		/**
 		 * Getter method for measure of the Voice 
 		 * @return measures of the Voice
