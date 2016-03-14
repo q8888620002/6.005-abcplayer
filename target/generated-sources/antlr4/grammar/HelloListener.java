@@ -39,16 +39,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitField_number(@NotNull HelloParser.Field_numberContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#alternative_endings}.
-	 * @param ctx the parse tree
-	 */
-	void enterAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#alternative_endings}.
-	 * @param ctx the parse tree
-	 */
-	void exitAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#bar_line}.
 	 * @param ctx the parse tree
 	 */
@@ -188,16 +178,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMeasure_end(@NotNull HelloParser.Measure_endContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#repeat}.
-	 * @param ctx the parse tree
-	 */
-	void enterRepeat(@NotNull HelloParser.RepeatContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#repeat}.
-	 * @param ctx the parse tree
-	 */
-	void exitRepeat(@NotNull HelloParser.RepeatContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#note_element}.
 	 * @param ctx the parse tree

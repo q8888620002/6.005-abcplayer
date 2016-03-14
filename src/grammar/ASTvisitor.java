@@ -16,6 +16,7 @@ import music.Key;
 import music.Measure;
 import music.Music;
 import music.Note;
+import music.Repeat;
 import music.Song;
 import music.Tuplet;
 import music.TupletType;
@@ -41,7 +42,11 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	private List<Note> chordNotes;
 	private List<Music> musicsInTuplet;
 	private List<Music> MusicInMea;
-	private List<Measure> meaInRepeat;
+	private List<Measure> meaOfSong = new ArrayList<Measure>();
+	private List<Measure> endings = new ArrayList<Measure>();
+	private List<Measure> measures = new ArrayList<Measure>();
+	private Boolean inEnding1 = false;
+	private Boolean inEnding2 = false;
 	private TupletType Type;
 	
 	@Override 
@@ -159,31 +164,53 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 		
 		
 		return visitChildren(ctx); }
+	
 	@Override 
-	public Void visitRepeat(@NotNull HelloParser.RepeatContext ctx) { 
-		meaInRepeat = new ArrayList<Measure>();
+	public Void visitBar_line(@NotNull HelloParser.Bar_lineContext ctx) { 
 		
-		return visitChildren(ctx); 
-		}
-
-	@Override 
-	public Void visitAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx) {
+			switch (ctx.BARLINE_START().getText().replaceAll("[^\\d]", "")) {
+				case "1":
+					inEnding1 = true;
+					break;
+				case "2":
+					inEnding2 = true;
+				default:
+					break;
+			}
 		
-		return visitChildren(ctx); 
-		}
-
+		return visitChildren(ctx); }
+	
 	@Override 
 	public Void visitMeasure(@NotNull HelloParser.MeasureContext ctx) { 
 		MusicInMea = new ArrayList<Music>();
 		inMeasure = true;
 		visitChildren(ctx);
+		
 		Measure measure = new Measure(MusicInMea);
+			if(inEnding1){
+				endings.add(measure);
+				inEnding1 = false;
+			}else if(inEnding2){
+				endings.add(measure);
+				inEnding2 = false;
+				Repeat Repeat = new Repeat(measures, endings);
+				meaOfSong.addAll(Repeat.getRepeat());
+				
+				endings = new ArrayList<Measure>();
+				measures = new ArrayList<Measure>();
+				
+				System.out.println(meaOfSong.toString());
+			}else{
+				measures.add(measure);
+			}
+			
 		return null;
 		}
 
 	@Override 
 	public Void visitMeasure_end(@NotNull HelloParser.Measure_endContext ctx) { 
 		inMeasure = false;
+		
 		return null; 
 		}
 	

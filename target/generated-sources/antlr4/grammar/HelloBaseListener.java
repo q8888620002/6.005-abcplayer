@@ -53,18 +53,6 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterBar_line(@NotNull HelloParser.Bar_lineContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -228,18 +216,6 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMeasure_end(@NotNull HelloParser.Measure_endContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRepeat(@NotNull HelloParser.RepeatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRepeat(@NotNull HelloParser.RepeatContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

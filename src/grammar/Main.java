@@ -14,7 +14,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class Main {
 
 	public static void main(String[] strings) throws IOException {
-		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("fur_elise.abc"));
+		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("paddy.abc"));
 		HelloLexer lexer = new HelloLexer(inputStream);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		HelloParser parser = new HelloParser(tokens);

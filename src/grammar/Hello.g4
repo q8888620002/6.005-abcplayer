@@ -32,9 +32,7 @@ FIELD_KEY: 'K:'(WS)*BASENOTE  KEY_ACCIDENTAL? MODE_MINOR?(WS)* ;
 
 
 abc_music : abc_line+;
-abc_line : measure| repeat| mid_tune_field ;
-repeat: (measure+)* alternative_endings+;
-alternative_endings: NTH_REPEAT element+ measure_end ;
+abc_line : measure+| mid_tune_field ;
 measure:  element+ measure_end;
 measure_end: MEASURE_END (EOL)? ;
 MEASURE_END: (WS?)('|' | '||' |':|'| '|]' )(WS?) ;
@@ -55,8 +53,7 @@ NOTE:(WS)? (PITCH | REST) DURATION? (WS)? ;
 DURATION: DIGIT+ | FRACTION ;
 
 FRACTION:(DIGIT+)? SLASH (DIGIT+)?; 
-BARLINE_START : (WS?)( '[|' | '|:')(WS?);
-NTH_REPEAT :('[1' | '[2');
+BARLINE_START : (WS?)( '[|' | '|:'|'[1' | '[2')(WS?);
 
 TUPLET_START:'(2'|'(3'|'(4';
 
