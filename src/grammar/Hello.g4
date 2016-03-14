@@ -32,24 +32,30 @@ FIELD_KEY: 'K:'(WS)*BASENOTE  KEY_ACCIDENTAL? MODE_MINOR?(WS)* ;
 
 
 abc_music : abc_line+;
-abc_line : element+| mid_tune_field   ;
+abc_line : measure| repeat| mid_tune_field ;
+repeat: (measure+)* alternative_endings+;
+alternative_endings: NTH_REPEAT element+ measure_end ;
+measure:  element+ measure_end;
+measure_end: MEASURE_END (EOL)? ;
+MEASURE_END: (WS?)('|' | '||' |':|'| '|]' )(WS?) ;
+
 
 mid_tune_field: FIELD_VOICE (EOL)?;
 
 element : (note_element |tuplet_element |chord_element|
-	bar_line | nth_repeat |close_bracet|EOL)(SPACE*);
+	bar_line |close_bracet|EOL)(SPACE*);
 close_bracet: CLOSE_BRACET;
 chord_element: (WS)? (OPEN_BRACET note_element* close_bracet) (WS)?;
 note_element: NOTE ;
 tuplet_element:  (WS)? TUPLET_START (chord_element|note_element)+;
-nth_repeat : NTH_REPEAT ;
-bar_line : BARLINE (EOL)? ; 
+
+bar_line : BARLINE_START (EOL)? ; 
 
 NOTE:(WS)? (PITCH | REST) DURATION? (WS)? ;
 DURATION: DIGIT+ | FRACTION ;
 
 FRACTION:(DIGIT+)? SLASH (DIGIT+)?; 
-BARLINE: (WS?)('|' | '||' | '[|' | '|]' | ':|' | '|:')(WS?);
+BARLINE_START : (WS?)( '[|' | '|:')(WS?);
 NTH_REPEAT :('[1' | '[2');
 
 TUPLET_START:'(2'|'(3'|'(4';
@@ -82,7 +88,7 @@ NEWLINE:[\n]+ ;
 SPACE:[ \t]+-> skip ;
 SYMBOL :':';
 WS : [ \t\r\n]+ ; // skip spaces, tabs, newlines
-COMMENT:'%' TEXT* NEWLINE;
+COMMENT:'%' (TEXT*)? NEWLINE;
 
 
 MODE_MINOR: 'm';

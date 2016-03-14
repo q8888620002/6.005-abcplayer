@@ -37,8 +37,11 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	private List<Voice> voices;
 	private Boolean InChords = false;
 	private Boolean inTuplet = false;
+	private Boolean inMeasure = false;
 	private List<Note> chordNotes;
 	private List<Music> musicsInTuplet;
+	private List<Music> MusicInMea;
+	private List<Measure> meaInRepeat;
 	private TupletType Type;
 	
 	@Override 
@@ -152,11 +155,40 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	
 	@Override 
 	public Void visitMid_tune_field(@NotNull HelloParser.Mid_tune_fieldContext ctx) {
+		
+		
+		
 		return visitChildren(ctx); }
+	@Override 
+	public Void visitRepeat(@NotNull HelloParser.RepeatContext ctx) { 
+		meaInRepeat = new ArrayList<Measure>();
+		
+		return visitChildren(ctx); 
+		}
+
+	@Override 
+	public Void visitAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx) {
+		
+		return visitChildren(ctx); 
+		}
+
+	@Override 
+	public Void visitMeasure(@NotNull HelloParser.MeasureContext ctx) { 
+		MusicInMea = new ArrayList<Music>();
+		inMeasure = true;
+		visitChildren(ctx);
+		Measure measure = new Measure(MusicInMea);
+		return null;
+		}
+
+	@Override 
+	public Void visitMeasure_end(@NotNull HelloParser.Measure_endContext ctx) { 
+		inMeasure = false;
+		return null; 
+		}
 	
 	@Override 
 	public Void visitNote_element(@NotNull HelloParser.Note_elementContext ctx) { 
-		
 		/*
 		 *Set for Note 
 		 */
@@ -275,6 +307,10 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 				chordNotes.add(note);
 			}else if((inTuplet)&(!InChords)){
 				musicsInTuplet.add(note);
+			}else{
+				if(inMeasure){
+					MusicInMea.add(note);
+				}
 			}
 			
 			return visitChildren(ctx); 
@@ -294,6 +330,8 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 		Chord chord = new Chord(chordNotes);
 			if(inTuplet){
 				musicsInTuplet.add(chord);
+			}else if(inMeasure){
+				MusicInMea.add(chord);
 			}
 		return visitChildren(ctx); 
 		}
@@ -315,8 +353,12 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 			default:
 				break;
 		}
+		
 		visitChildren(ctx);
 		Tuplet tuplet = new Tuplet(Type, musicsInTuplet);
+		if(inMeasure){
+			MusicInMea.add(tuplet);
+		}
 		inTuplet = false;
 		return null;
 		}

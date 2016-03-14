@@ -53,6 +53,18 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBar_line(@NotNull HelloParser.Bar_lineContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -125,6 +137,30 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterClose_bracet(@NotNull HelloParser.Close_bracetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClose_bracet(@NotNull HelloParser.Close_bracetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMeasure(@NotNull HelloParser.MeasureContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMeasure(@NotNull HelloParser.MeasureContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterField_key(@NotNull HelloParser.Field_keyContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -185,6 +221,30 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMeasure_end(@NotNull HelloParser.Measure_endContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMeasure_end(@NotNull HelloParser.Measure_endContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRepeat(@NotNull HelloParser.RepeatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRepeat(@NotNull HelloParser.RepeatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNote_element(@NotNull HelloParser.Note_elementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -192,6 +252,18 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNote_element(@NotNull HelloParser.Note_elementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterChord_element(@NotNull HelloParser.Chord_elementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitChord_element(@NotNull HelloParser.Chord_elementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -228,18 +300,6 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitElement(@NotNull HelloParser.ElementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNth_repeat(@NotNull HelloParser.Nth_repeatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNth_repeat(@NotNull HelloParser.Nth_repeatContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -30,6 +30,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitField_number(@NotNull HelloParser.Field_numberContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#alternative_endings}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAlternative_endings(@NotNull HelloParser.Alternative_endingsContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#bar_line}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -66,6 +72,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOther_fields(@NotNull HelloParser.Other_fieldsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#close_bracet}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClose_bracet(@NotNull HelloParser.Close_bracetContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#measure}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMeasure(@NotNull HelloParser.MeasureContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#field_key}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -96,11 +114,29 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitField_voice(@NotNull HelloParser.Field_voiceContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#measure_end}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMeasure_end(@NotNull HelloParser.Measure_endContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#repeat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRepeat(@NotNull HelloParser.RepeatContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#note_element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitNote_element(@NotNull HelloParser.Note_elementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#chord_element}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChord_element(@NotNull HelloParser.Chord_elementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#field_meter}.
 	 * @param ctx the parse tree
@@ -119,10 +155,4 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitElement(@NotNull HelloParser.ElementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#nth_repeat}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNth_repeat(@NotNull HelloParser.Nth_repeatContext ctx);
 }

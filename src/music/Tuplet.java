@@ -40,16 +40,19 @@ public class Tuplet implements Music,Sequence{
 	}
 	
 	/**
-	 * Construct a new Tuplet class with List of music & type of tuplet  
+	 * Construct a new Tuplet class with group of music & type of tuplet  
+	 * the size of music should be the same as tuplet-type
 	 * @param type DIPLET, TRIPLET, QUADRUTUPLET 
-	 * @param music NOTE or CHORD 
+	 * @param array music NOTE or CHORD 
 	 */
-	private Tuplet(TupletType type, List<Music>musics){
+	public Tuplet(TupletType type, List<Music> musics){
+		
 		this.musics = musics;
 		this.type = type;
 		
 		checkRep();
 	}
+	
 	
 	/**
 	 * check rep of Tuplet
