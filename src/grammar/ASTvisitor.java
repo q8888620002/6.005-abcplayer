@@ -3,9 +3,12 @@ package grammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.antlr.v4.runtime.misc.NotNull;
 
+import music.Chord;
 import music.Duration;
 import music.Header;
 import music.Key;
@@ -28,6 +31,9 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	private String voiceNum;
 	private String key;
 	private List<Voice> voices;
+	private Boolean InChords = false;
+	private List<Note> chordNotes;
+	
 	
 	@Override 
 	public Void visitAbc_tune(@NotNull HelloParser.Abc_tuneContext ctx) {
@@ -148,27 +154,48 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 		int denominator = header.getLength().getDenominator();
 		Duration duration;
 		Key key;
-		
+		Note note;
 		/*
 		 * Set duration 
 		 */
 		
 		if(splitNote.length!=1){
 			String[] fractions = splitNote[1].split("/",2);
-			/*
-			 * with fractional duration
-			 */
+		
 			if(fractions.length!=1){
-				if(fractions[0].length()!=0){
+				if(fractions[0].length()==2){
+					/*
+					 * Note with fractional duration ex. z3/4 
+					 */
 					duration = new Duration(numerator*Integer.parseInt(fractions[0]),
 							denominator*Integer.parseInt(fractions[1]));
-				}else{
+				}else if(fractions[0].length()==1){
+					/*
+					 * Note with fractional duration ex. z/4
+					 */
 					duration = new Duration(numerator,
-							denominator*Integer.parseInt(fractions[1]));
+							denominator*Integer.parseInt(fractions[0]));
+				}else{
+					/* 
+					 * Duration with a single slash ex, D/
+					 */
+					duration = new Duration(numerator,
+							denominator*2);
 				}
 			}else{
-				duration = new Duration(numerator*Integer.parseInt(fractions[0]),
-						denominator);
+				/*
+				 *   Key with integer duration ex. D2 
+				 */
+				if(fractions[0].length()!=0){
+					duration = new Duration(numerator*Integer.parseInt(fractions[0]),
+							denominator);
+				}else{
+					/*
+					 * Note with explicit duration ex. D 
+					 */
+					duration = new Duration(numerator,
+							denominator);
+				}
 			}
 		}else{
 			/*
@@ -215,18 +242,39 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 			
 			Octave+=1;
 			key = new Key(accidental,Character.toUpperCase(KeyOfNote.charAt(0)), Octave);
-			Note note = new Note(key,duration);
+		    note = new Note(key,duration);
 		}else if(KeyOfNote.charAt(0) =='z'){
 			/*
 			 * rest element
 			 */
-			Note rest = new Note(duration);
+			note = new Note(duration);
 			
 		}else{
 			key = new Key(accidental,KeyOfNote.charAt(0), Octave);
-			Note note = new Note(key,duration);
+		 note = new Note(key,duration);
 		}
 		
+		
+			if(InChords){
+				chordNotes.add(note);
+			}
+			
+			return visitChildren(ctx); 
+		}
+	
+	@Override 
+	public Void visitChord_element(@NotNull HelloParser.Chord_elementContext ctx) { 
+		chordNotes = new ArrayList<Note>();
+		InChords = true;
+		return visitChildren(ctx); 
+		}
+	
+	
+	@Override 
+	public Void visitClose_bracet(@NotNull HelloParser.Close_bracetContext ctx) { 
+		InChords = false;
+		Chord chord = new Chord(chordNotes);
+		System.out.println(chord.toString());
 		return visitChildren(ctx); 
 		}
 	

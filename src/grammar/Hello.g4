@@ -37,15 +37,15 @@ abc_line : element+| mid_tune_field   ;
 mid_tune_field: FIELD_VOICE (EOL)?;
 
 element : (note_element |tuplet_element |chord_element|
-	bar_line | nth_repeat |END |EOL)(SPACE*);
-chord_element: CHORDS;
+	bar_line | nth_repeat |close_bracet|EOL)(SPACE*);
+close_bracet: CLOSE_BRACET;
+chord_element: (WS)? (OPEN_BRACET note_element* close_bracet) (WS)?;
 note_element: NOTE ;
-tuplet_element:  (WS)?(DUPLET|TRIPLET|QUADRUPLET) (PITCH+|CHORDS|NOTE)+;
+tuplet_element:  (WS)?(DUPLET|TRIPLET|QUADRUPLET) (PITCH+|chord_element|NOTE)+;
 nth_repeat : NTH_REPEAT ;
 bar_line : BARLINE (EOL)? ; 
 
 NOTE:(WS)? (PITCH | REST) DURATION? (WS)? ;
-CHORDS: (WS)?'['NOTE+']'(WS)?;
 DURATION: DIGIT+ | FRACTION ;
 
 FRACTION:(DIGIT+)? SLASH (DIGIT+)?; 
@@ -58,7 +58,8 @@ QUADRUPLET : '(4';
 
 PITCH :  ACCIDENTAL? BASENOTE OCTAVE?;
 OCTAVE: ('\''|',')+;
-END:']';
+OPEN_BRACET: (WS)?'['(WS)?;
+CLOSE_BRACET:(WS)?']'(WS)?;
 
 BASENOTE : ('A'..'G' | 'a'..'g');
 REST:'z';
