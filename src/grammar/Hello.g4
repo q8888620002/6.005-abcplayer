@@ -41,7 +41,7 @@ element : (note_element |tuplet_element |chord_element|
 close_bracet: CLOSE_BRACET;
 chord_element: (WS)? (OPEN_BRACET note_element* close_bracet) (WS)?;
 note_element: NOTE ;
-tuplet_element:  (WS)?(DUPLET|TRIPLET|QUADRUPLET) (PITCH+|chord_element|NOTE)+;
+tuplet_element:  (WS)? TUPLET_START (chord_element|note_element)+;
 nth_repeat : NTH_REPEAT ;
 bar_line : BARLINE (EOL)? ; 
 
@@ -52,9 +52,8 @@ FRACTION:(DIGIT+)? SLASH (DIGIT+)?;
 BARLINE: (WS?)('|' | '||' | '[|' | '|]' | ':|' | '|:')(WS?);
 NTH_REPEAT :('[1' | '[2');
 
-DUPLET : '(2';
-TRIPLET : '(3';
-QUADRUPLET : '(4';
+TUPLET_START:'(2'|'(3'|'(4';
+
 
 PITCH :  ACCIDENTAL? BASENOTE OCTAVE?;
 OCTAVE: ('\''|',')+;

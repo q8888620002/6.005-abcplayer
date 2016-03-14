@@ -1,6 +1,7 @@
 package grammar;
 
 
+import java.awt.Window.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -13,8 +14,11 @@ import music.Duration;
 import music.Header;
 import music.Key;
 import music.Measure;
+import music.Music;
 import music.Note;
 import music.Song;
+import music.Tuplet;
+import music.TupletType;
 import music.Voice;
 
 
@@ -32,8 +36,10 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	private String key;
 	private List<Voice> voices;
 	private Boolean InChords = false;
+	private Boolean inTuplet = false;
 	private List<Note> chordNotes;
-	
+	private List<Music> musicsInTuplet;
+	private TupletType Type;
 	
 	@Override 
 	public Void visitAbc_tune(@NotNull HelloParser.Abc_tuneContext ctx) {
@@ -70,8 +76,19 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	public Void visitField_meter(@NotNull HelloParser.Field_meterContext ctx) { 
 			String[] fraction = ctx.FIELD_METER()
 					.getText().replace("M:","").replace("\n","").trim().split("/");
-			meter = new Duration(Integer.parseInt(fraction[0]),Integer.parseInt(fraction[1]));
-		
+				if(fraction[0].length() == 1){
+					/*
+					 * Meter :C
+					 */
+						meter = new Duration(4,4);
+					}else if(fraction[0].length() == 2){
+						/*
+						 * Meter :C|
+						 */
+						meter = new Duration(2,2);
+					}else{
+						meter = new Duration(Integer.parseInt(fraction[0]),Integer.parseInt(fraction[1]));
+				}		
 			return visitChildren(ctx); 
 			}
 	
@@ -254,9 +271,10 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 		 note = new Note(key,duration);
 		}
 		
-		
 			if(InChords){
 				chordNotes.add(note);
+			}else if((inTuplet)&(!InChords)){
+				musicsInTuplet.add(note);
 			}
 			
 			return visitChildren(ctx); 
@@ -274,9 +292,35 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	public Void visitClose_bracet(@NotNull HelloParser.Close_bracetContext ctx) { 
 		InChords = false;
 		Chord chord = new Chord(chordNotes);
-		System.out.println(chord.toString());
+			if(inTuplet){
+				musicsInTuplet.add(chord);
+			}
 		return visitChildren(ctx); 
 		}
+	
+	@Override 
+	public Void visitTuplet_element(@NotNull HelloParser.Tuplet_elementContext ctx) { 
+		inTuplet = true;
+		musicsInTuplet = new ArrayList<Music>();
+		switch (ctx.TUPLET_START().getText()) {
+			case "(2":
+				Type = TupletType.DUPLET;
+				break;
+			case"(3":
+				Type = TupletType.TRIPLET;
+				break;
+			case"(4":
+				Type = TupletType.QUADRUPLET;
+				break;
+			default:
+				break;
+		}
+		visitChildren(ctx);
+		Tuplet tuplet = new Tuplet(Type, musicsInTuplet);
+		inTuplet = false;
+		return null;
+		}
+
 	
 	}
 	
