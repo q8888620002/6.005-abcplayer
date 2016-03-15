@@ -3,6 +3,8 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
+import sound.SequencePlayer;
+
 /*
  *  A Measure is composed a group of music elements such as Notes, Chords, Tuplet.
  *  Sometimes also referred to as a bar.
@@ -37,8 +39,9 @@ public class Measure implements Sequence{
 		
 		
 		@Override
-		public void accept(Visitor s) {
+		public SequencePlayer accept(Visitor s) {
 			s.visit(this);
+			return null;
 		}
 		
 		/**

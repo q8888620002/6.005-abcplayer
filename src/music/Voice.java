@@ -10,6 +10,8 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
+import sound.SequencePlayer;
+
 public class Voice implements Sequence{
 		private final List <Measure> musics;
 		private final int voiceNum;
@@ -48,10 +50,12 @@ public class Voice implements Sequence{
 		
 		/**
 		 * Visitor method for visitor to process a Voice
+		 * @return 
 		 */
 		@Override
-		public void accept(Visitor s) {
+		public SequencePlayer accept(Visitor s) {
 			s.visit(this);
+			return null;
 			
 		}
 		

@@ -3,6 +3,8 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
+import sound.SequencePlayer;
+
 
 /*
  *  A type representing a chord, which is simply a group of 
@@ -84,12 +86,14 @@ public class Chord implements Music, Sequence {
 	
 	/**
 	 * visitor method for sequence Visitor	
+	 * @return 
 	 */
 
 	@Override
-	public void accept(Visitor s) {
+	public SequencePlayer accept(Visitor s) {
 		// TODO Auto-generated method stub
 		s.visit(this);
+		return null;
 	}
 	
 	/**

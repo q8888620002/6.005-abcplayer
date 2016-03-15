@@ -3,6 +3,8 @@ package music;
 import java.util.HashMap;
 import java.util.List;
 
+import sound.SequencePlayer;
+
 /*
  * this is the immutable, a top class that represents an ABC music
  * also an output of a Tree Visitor & an input of ToPitch Visitor.
@@ -18,15 +20,17 @@ public class Song implements Sequence{
 	
 		private final Header header;
 		private final HashMap<Integer, Voice> voices;
+		private final int TickTime;
 		/**
 		 * Generate a new Song Object
 		 * @param header which contains field info such as index, composer, etc.
 		 * @param body refers to the Body datatype containing list of Voice
 		 */
 		
-		public Song(Header header, HashMap<Integer, Voice> voices) {
+		public Song(Header header, HashMap<Integer, Voice> voices,int TickTIme) {
 			this.header = header;
 			this.voices = voices;
+			this.TickTime = TickTIme;
 		}
 		
 		/**
@@ -46,14 +50,22 @@ public class Song implements Sequence{
 			return voices;
 		}
 		
+		public int getTickTime(){
+			return TickTime;
+		}
+		
 		/**
 		 * method for visitor to process Song
+		 * @return 
 		 */
 		@Override
-		public void accept(Visitor s) {
+		public SequencePlayer accept(Visitor s) {
 			s.visit(header);
+			return null;
 		}
-	
+		
+		
+		
 		/**
 		 * @return string representation of the Song
 		 */

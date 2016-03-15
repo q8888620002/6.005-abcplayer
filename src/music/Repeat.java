@@ -11,6 +11,8 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
+import sound.SequencePlayer;
+
 public class Repeat implements Sequence{
 	/**
 	 *    meas represents the common part of the repetition
@@ -56,10 +58,12 @@ public class Repeat implements Sequence{
 	
 	/**
 	 *  Allows a visitor to process the object
+	 * @return 
 	 */
 	@Override
-	public void accept(Visitor visitor) {
+	public SequencePlayer accept(Visitor visitor) {
 		visitor.visit(this);
+		return null;
 	}
 	
 	/**

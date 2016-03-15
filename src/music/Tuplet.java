@@ -18,6 +18,8 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
+import sound.SequencePlayer;
+
 public class Tuplet implements Music,Sequence{
 	private final  List<Music> musics;
 	private final TupletType type;
@@ -89,12 +91,14 @@ public class Tuplet implements Music,Sequence{
 	
 	/**
 	 * visitor method for sequence interface
+	 * @return 
 	 */
 
 	@Override
-	public void accept(Visitor s) {
+	public SequencePlayer accept(Visitor s) {
 		// TODO Auto-generated method stub
 		s.visit(this);
+		return null;
 	}
 
 

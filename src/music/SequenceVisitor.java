@@ -9,7 +9,11 @@ public class SequenceVisitor implements Visitor{
 	private SequencePlayer player;
 	
 	public void visit(Song s) {
-		// TODO Auto-generated method stub
+		
+		/*
+		 * Construct a SequencePlayer
+		 */
+		player = new SequencePlayer(s.getHeader().getTempo(), s.getTickTime());
 		s.getHeader().accept(this);
 	}
 

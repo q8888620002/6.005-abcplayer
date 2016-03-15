@@ -61,10 +61,13 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		Voices = new HashMap<Integer, Voice>();
 		visit(ctx.getChild(0));
 		visit(ctx.getChild(1));
-		
-		song = new Song(header, Voices);
+		/*
+		 * calculating tick time per quarter 
+		 */
+		TickTime = TickTime/4;
+		song = new Song(header, Voices, TickTime);
 		System.out.println(TickTime);
-		System.err.println(song.toString());
+		System.out.println(song.toString());
 			return song;
 		}
 	
