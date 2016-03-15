@@ -45,8 +45,11 @@ public class Tuplet implements Music,Sequence{
 	 * @param type DIPLET, TRIPLET, QUADRUTUPLET 
 	 * @param array music NOTE or CHORD 
 	 */
-	public Tuplet(TupletType type, List<Music> musics){
-		
+	public Tuplet(TupletType type, List<Music> music){
+		List<Music> musics = new ArrayList<Music>();
+		for(Music m: music){
+			musics.add(m.changeDuration(type.size()));
+		}
 		this.musics = musics;
 		this.type = type;
 		
@@ -99,7 +102,7 @@ public class Tuplet implements Music,Sequence{
 	@Override
 	public Duration getDuration() {
 		// TODO Auto-generated method stub
-		return null;
+		return musics.get(0).getDuration();
 	}
 
 	/**

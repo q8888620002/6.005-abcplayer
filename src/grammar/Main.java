@@ -16,16 +16,16 @@ import music.Song;
 public class Main {
 
 	public static void main(String[] strings) throws IOException {
-		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("paddy.abc"));
+		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("little_night_music.abc"));
 		HelloLexer lexer = new HelloLexer(inputStream);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		HelloParser parser = new HelloParser(tokens);
-			
+		
 		ParseTree tree = parser.abc_tune();
 		System.out.println(tree.toStringTree(parser));
 		ASTvisitor visitor  = new ASTvisitor();
 		Song song = visitor.visit(tree);
-		System.out.println(song.toString());
+		
 		}
 	
 	

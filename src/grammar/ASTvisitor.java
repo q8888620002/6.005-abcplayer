@@ -32,9 +32,10 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	private String Composer;
 	private Duration meter;
 	private Duration length;
-	private int tempo;
-	private  int voiceNum = 0;
+	private int tempo = 0;
+	private int voiceNum = 0;
 	private int currentVoice;
+	private int TickTime;
 	private String key;
 	private Boolean InChords = false;
 	private Boolean inTuplet = false;
@@ -62,7 +63,8 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		visit(ctx.getChild(1));
 		
 		song = new Song(header, Voices);
-		
+		System.out.println(TickTime);
+		System.err.println(song.toString());
 			return song;
 		}
 	
@@ -114,9 +116,11 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	
 	@Override 
 	public Song visitField_default_length(@NotNull HelloParser.Field_default_lengthContext ctx) {
+			
 			String[] fraction = ctx.FIELD_DEFAULT_LENGTH()
 					.getText().replace("L:","").replace("\n","").trim().split("/");
-			length = new Duration(Integer.parseInt(fraction[0]),Integer.parseInt(fraction[1]));			
+			length = new Duration(Integer.parseInt(fraction[0]),Integer.parseInt(fraction[1]));	
+			TickTime = Integer.parseInt(fraction[1]);
 			return visitChildren(ctx);
 		
 		
@@ -141,12 +145,21 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	@Override 
 	public Song visitField_key(@NotNull HelloParser.Field_keyContext ctx) { 
 		key = ctx.FIELD_KEY().getText().replace("K:", "");
+
 		if(length==null){
-			length = new Duration(1,4);
+			length = new Duration(1,8);
+			TickTime = 8;
+		}
+		
+		if(meter == null){
+			meter = new Duration(4,4);
+		}
+
+		if(tempo==0){
+			tempo = 100;
 		}
 		header = new Header(FieldIndex, FieldTitle,Composer, length, meter,tempo,voiceNum,key);
 		
-
 		return visitChildren(ctx);
 		}
 	
@@ -165,6 +178,7 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 			voiceNum+=1;
 			currentVoice = voiceNum;
 			visitChildren(ctx);
+			meaOfSong.addAll(measures);
 			Voice v = new Voice(meaOfSong,voiceNum);
 			Voices.put(voiceNum, v);
 			
@@ -175,6 +189,7 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 			
 			currentVoice = voiceNum;
 			visitChildren(ctx);
+			meaOfSong.addAll(measures);
 			Voice v = new Voice(meaOfSong,voiceNum);
 			Voices.put(voiceNum, v);
 		}
@@ -210,6 +225,7 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		visitChildren(ctx);
 		
 		Measure measure = new Measure(MusicInMea);
+		
 			if(inEnding1){
 				endings.add(measure);
 				inEnding1 = false;
@@ -230,6 +246,7 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 				finishedRepition = false;
 			}else{
 				measures.add(measure);
+				
 			}
 			
 			
@@ -272,24 +289,34 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 			String[] fractions = splitNote[1].split("/",2);
 		
 			if(fractions.length!=1){
-				if(fractions[0].length()==2){
+				
+				
+				if((fractions[0].length()==1)&((fractions[1].length()==1))){
 					/*
 					 * Note with fractional duration ex. z3/4 
 					 */
 					duration = new Duration(numerator*Integer.parseInt(fractions[0]),
 							denominator*Integer.parseInt(fractions[1]));
-				}else if(fractions[0].length()==1){
+						GetLCD(denominator*Integer.parseInt(fractions[1]));
+					
+				}else if(fractions[1].length()==1){
 					/*
 					 * Note with fractional duration ex. z/4
 					 */
 					duration = new Duration(numerator,
-							denominator*Integer.parseInt(fractions[0]));
+							denominator*Integer.parseInt(fractions[1]));
+					
+						GetLCD(denominator*Integer.parseInt(fractions[1]));
+					
 				}else{
 					/* 
 					 * Duration with a single slash ex, D/
 					 */
 					duration = new Duration(numerator,
 							denominator*2);
+						GetLCD(denominator*2);	
+						
+						
 				}
 			}else{
 				/*
@@ -298,12 +325,14 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 				if(fractions[0].length()!=0){
 					duration = new Duration(numerator*Integer.parseInt(fractions[0]),
 							denominator);
+					
 				}else{
 					/*
 					 * Note with explicit duration ex. D 
 					 */
 					duration = new Duration(numerator,
 							denominator);
+					
 				}
 			}
 		}else{
@@ -311,6 +340,7 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 			 * without duration after key
 			 */
 			duration = new Duration(numerator,denominator);
+			
 		}
 		
 		/*
@@ -403,12 +433,15 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		switch (ctx.TUPLET_START().getText()) {
 			case "(2":
 				Type = TupletType.DUPLET;
+				
 				break;
 			case"(3":
 				Type = TupletType.TRIPLET;
+			
 				break;
 			case"(4":
 				Type = TupletType.QUADRUPLET;
+			
 				break;
 			default:
 				break;
@@ -419,9 +452,30 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		if(inMeasure){
 			MusicInMea.add(tuplet);
 		}
+		
+		GetLCD(tuplet.getDuration().getDenominator());
 		inTuplet = false;
 		return null;
 		}
+	
+	private void GetLCD(int denominator){
+		int max;
+		int min;
+		if(TickTime < denominator){
+			min = TickTime;
+			max = denominator;
+		}else{
+			min = denominator;
+			max = TickTime;
+		}
+	
+		for(int t = 1; t <= min;t++){
+			if(((max*t) % min )==0){
+				TickTime = max*t;
+				break;
+			}
+		}		
+	}
 
 	
 	}
