@@ -1,7 +1,7 @@
 package music;
 
 import sound.Pitch;
-import sound.SequencePlayer;
+
 
 /*
  * A Note represent a single note element or rest in a measure, a chord, or a tuplet. 
@@ -61,9 +61,8 @@ public class Note implements Music,Sequence{
 		}
 
 		@Override
-		public SequencePlayer accept(Visitor s) {
+		public void accept(Visitor s) {
 			s.visit(this);
-			return null;
 		}
 		/**
 		 * @return a String representation of this note/rest
@@ -77,5 +76,7 @@ public class Note implements Music,Sequence{
 				throw new NullPointerException("failed to output Note element");	
 			}
 		}
+
+		
 
 }

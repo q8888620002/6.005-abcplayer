@@ -9,4 +9,5 @@ public interface Music {
 		 * @return 
 		 */
 		public Music changeDuration(int denominator);
+		public void accept(Visitor s);
 }

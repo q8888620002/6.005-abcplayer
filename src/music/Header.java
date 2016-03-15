@@ -1,6 +1,5 @@
 package music;
 
-import sound.SequencePlayer;
 
 /*
  * A header stores the attributes of an ABC music such as tempo, key, default length, etc.  
@@ -143,9 +142,9 @@ public class Header implements Sequence{
 	 * method for visitor to process the object 
 	 * @return 
 	 */
-	public SequencePlayer accept(Visitor v) {
+	public void accept(Visitor v) {
 		v.visit(this);
-		return null;
+
 	}
 	
 	

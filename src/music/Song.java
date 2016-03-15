@@ -1,9 +1,10 @@
 package music;
 
 import java.util.HashMap;
-import java.util.List;
 
-import sound.SequencePlayer;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
+
 
 /*
  * this is the immutable, a top class that represents an ABC music
@@ -59,9 +60,8 @@ public class Song implements Sequence{
 		 * @return 
 		 */
 		@Override
-		public SequencePlayer accept(Visitor s) {
-			s.visit(header);
-			return null;
+		public void accept(Visitor s) {
+			s.visit(voices.get(1));
 		}
 		
 		

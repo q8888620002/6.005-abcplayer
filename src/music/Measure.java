@@ -33,15 +33,15 @@ public class Measure implements Sequence{
 		 * Getter method of the measure elements 
 		 * @return a List of music elements 
 		 */
-		public List<Music> getMeasures(){
+		public List<Music> getMusics(){
 			return music;
 		}
 		
 		
 		@Override
-		public SequencePlayer accept(Visitor s) {
+		public void accept(Visitor s) {
 			s.visit(this);
-			return null;
+			
 		}
 		
 		/**

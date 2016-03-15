@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import music.SequenceVisitor;
 import music.Song;
 
 public class Main {
@@ -25,6 +26,9 @@ public class Main {
 		System.out.println(tree.toStringTree(parser));
 		ASTvisitor visitor  = new ASTvisitor();
 		Song song = visitor.visit(tree);
+		
+		SequenceVisitor visitor2= new SequenceVisitor();
+		visitor2.visit(song);
 		
 		}
 	

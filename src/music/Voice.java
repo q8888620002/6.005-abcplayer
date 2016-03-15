@@ -36,7 +36,7 @@ public class Voice implements Sequence{
 		 * Getter method for measure of the Voice 
 		 * @return measures of the Voice
 		 */
-		public List<Measure> getVoice(){
+		public List<Measure> getMeasures(){
 			return musics;
 		}
 			
@@ -53,10 +53,8 @@ public class Voice implements Sequence{
 		 * @return 
 		 */
 		@Override
-		public SequencePlayer accept(Visitor s) {
+		public void accept(Visitor s) {
 			s.visit(this);
-			return null;
-			
 		}
 		
 		/**

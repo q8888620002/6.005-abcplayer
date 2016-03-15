@@ -90,10 +90,10 @@ public class Chord implements Music, Sequence {
 	 */
 
 	@Override
-	public SequencePlayer accept(Visitor s) {
+	public void accept(Visitor s) {
 		// TODO Auto-generated method stub
 		s.visit(this);
-		return null;
+	
 	}
 	
 	/**
@@ -109,6 +109,5 @@ public class Chord implements Music, Sequence {
 		return chord+"]";
 	}
 
-	
 	
 }

@@ -61,9 +61,9 @@ public class Repeat implements Sequence{
 	 * @return 
 	 */
 	@Override
-	public SequencePlayer accept(Visitor visitor) {
+	public void accept(Visitor visitor) {
 		visitor.visit(this);
-		return null;
+		
 	}
 	
 	/**
