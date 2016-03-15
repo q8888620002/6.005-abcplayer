@@ -1,11 +1,11 @@
 package grammar;
 
 
-import java.awt.Window.Type;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -23,7 +23,7 @@ import music.TupletType;
 import music.Voice;
 
 
-public class ASTvisitor extends HelloBaseVisitor <Void>{
+public class ASTvisitor extends HelloBaseVisitor <Song>{
 
 	private Song song;
 	private Header header;
@@ -33,55 +33,67 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	private Duration meter;
 	private Duration length;
 	private int tempo;
-	private String voiceNum;
+	private  int voiceNum = 0;
+	private int currentVoice;
 	private String key;
-	private List<Voice> voices;
 	private Boolean InChords = false;
 	private Boolean inTuplet = false;
 	private Boolean inMeasure = false;
 	private List<Note> chordNotes;
 	private List<Music> musicsInTuplet;
 	private List<Music> MusicInMea;
+	private HashMap<Integer, Voice> Voices;
 	private List<Measure> meaOfSong = new ArrayList<Measure>();
 	private List<Measure> endings = new ArrayList<Measure>();
 	private List<Measure> measures = new ArrayList<Measure>();
+	private List<Measure> Repeat = new ArrayList<Measure>();
 	private Boolean inEnding1 = false;
 	private Boolean inEnding2 = false;
 	private TupletType Type;
+	private boolean finishedRepition;
 	
 	@Override 
-	public Void visitAbc_tune(@NotNull HelloParser.Abc_tuneContext ctx) {
-			return visitChildren(ctx);
+	public Song visitAbc_tune(@NotNull HelloParser.Abc_tuneContext ctx) {
+		/*
+		 * visit header
+		 */
+		Voices = new HashMap<Integer, Voice>();
+		visit(ctx.getChild(0));
+		visit(ctx.getChild(1));
+		
+		song = new Song(header, Voices);
+		
+			return song;
 		}
 	
 	@Override
-	public Void visitAbc_header(@NotNull HelloParser.Abc_headerContext ctx) {
+	public Song visitAbc_header(@NotNull HelloParser.Abc_headerContext ctx) {
 			return visitChildren(ctx); 
 		}
 	
 	@Override
-	public Void visitField_number(@NotNull HelloParser.Field_numberContext ctx) { 
+	public Song visitField_number(@NotNull HelloParser.Field_numberContext ctx) { 
 			FieldIndex = Integer.parseInt(ctx.FIELD_NUMBER().getText().replace("X:", "").trim());
 			return visitChildren(ctx); 
 			}
 	
 	@Override
-	public Void visitOther_fields(@NotNull HelloParser.Other_fieldsContext ctx) { 
+	public Song visitOther_fields(@NotNull HelloParser.Other_fieldsContext ctx) { 
 			return visitChildren(ctx); 
 			}
 	@Override
-	public Void visitField_title(@NotNull HelloParser.Field_titleContext ctx) { 
+	public Song visitField_title(@NotNull HelloParser.Field_titleContext ctx) { 
 			FieldTitle = ctx.FIELD_TITLE().getText().replace("T:", "").replace("\n","");
 			return visitChildren(ctx); 
 			}
 	@Override
-	public Void visitField_composer(@NotNull HelloParser.Field_composerContext ctx) {
+	public Song visitField_composer(@NotNull HelloParser.Field_composerContext ctx) {
 			Composer = ctx.FIELD_COMPOSER().getText().replace("C:", "").replace("\n","");
 			return visitChildren(ctx); 
 			}
 	
 	@Override
-	public Void visitField_meter(@NotNull HelloParser.Field_meterContext ctx) { 
+	public Song visitField_meter(@NotNull HelloParser.Field_meterContext ctx) { 
 			String[] fraction = ctx.FIELD_METER()
 					.getText().replace("M:","").replace("\n","").trim().split("/");
 				if(fraction[0].length() == 1){
@@ -101,7 +113,7 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 			}
 	
 	@Override 
-	public Void visitField_default_length(@NotNull HelloParser.Field_default_lengthContext ctx) {
+	public Song visitField_default_length(@NotNull HelloParser.Field_default_lengthContext ctx) {
 			String[] fraction = ctx.FIELD_DEFAULT_LENGTH()
 					.getText().replace("L:","").replace("\n","").trim().split("/");
 			length = new Duration(Integer.parseInt(fraction[0]),Integer.parseInt(fraction[1]));			
@@ -111,77 +123,88 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 			}
 
 	@Override 
-	public Void visitField_tempo(@NotNull HelloParser.Field_tempoContext ctx) { 
+	public Song visitField_tempo(@NotNull HelloParser.Field_tempoContext ctx) { 
 			tempo = Integer.parseInt(ctx.FIELD_TEMPO().getText().replace("Q:", "").trim());
 			return visitChildren(ctx); 
 			}
 	
 	@Override 
-	public Void visitField_voice(@NotNull HelloParser.Field_voiceContext ctx) {
-		List<Voice> voices = new ArrayList<Voice>();
-		voiceNum = ctx.FIELD_VOICE().getText().replace("V:", "");
-		 
-		return visitChildren(ctx); }
+	public Song visitField_voice(@NotNull HelloParser.Field_voiceContext ctx) {
+		
+		voiceNum += 1;
+	
+		return visitChildren(ctx); 
+		
+	}
 
 		
 	@Override 
-	public Void visitField_key(@NotNull HelloParser.Field_keyContext ctx) { 
+	public Song visitField_key(@NotNull HelloParser.Field_keyContext ctx) { 
 		key = ctx.FIELD_KEY().getText().replace("K:", "");
 		if(length==null){
 			length = new Duration(1,4);
 		}
 		header = new Header(FieldIndex, FieldTitle,Composer, length, meter,tempo,voiceNum,key);
 		
-		System.out.println(header.toString());
+
 		return visitChildren(ctx);
 		}
 	
 	@Override
-	public Void visitAbc_music(@NotNull HelloParser.Abc_musicContext ctx) { 
-		if(header.getVoice() == null){
-			voices = new ArrayList<Voice>();
-			
-			Measure measure = new Measure();
-			List<Measure> ms = new ArrayList<Measure>();
-			ms.add(measure);
-			Voice voice = new Voice(ms,1);
-			voices.add(voice);
-			return visitChildren(ctx); 
-		}	
+	public Song visitAbc_music(@NotNull HelloParser.Abc_musicContext ctx) { 
 		
 		return visitChildren(ctx); 
 		}
 
 	@Override 
-	public Void visitAbc_line(@NotNull HelloParser.Abc_lineContext ctx) {
+	public Song visitAbc_line(@NotNull HelloParser.Abc_lineContext ctx) {
+		if(voiceNum == 0){
+			/*
+			 * if header contains no voice fields information.
+			 */
+			voiceNum+=1;
+			currentVoice = voiceNum;
+			visitChildren(ctx);
+			Voice v = new Voice(meaOfSong,voiceNum);
+			Voices.put(voiceNum, v);
+			
+		}else if(voiceNum == 1){
+			/*
+			 * header with V:1
+			 */
+			
+			currentVoice = voiceNum;
+			visitChildren(ctx);
+			Voice v = new Voice(meaOfSong,voiceNum);
+			Voices.put(voiceNum, v);
+		}
 		
-		return visitChildren(ctx);
+		return null;
 		}
 	
 	@Override 
-	public Void visitMid_tune_field(@NotNull HelloParser.Mid_tune_fieldContext ctx) {
+	public Song visitMid_tune_field(@NotNull HelloParser.Mid_tune_fieldContext ctx) {
 		
 		
 		
 		return visitChildren(ctx); }
 	
 	@Override 
-	public Void visitBar_line(@NotNull HelloParser.Bar_lineContext ctx) { 
-		
-			switch (ctx.BARLINE_START().getText().replaceAll("[^\\d]", "")) {
-				case "1":
+	public Song visitBar_line(@NotNull HelloParser.Bar_lineContext ctx) { 
+
+			switch (ctx.BARLINE_START().getText().replaceAll("[\\s]", "").charAt(1)) {
+				case '1':
 					inEnding1 = true;
 					break;
-				case "2":
+				case '2':
 					inEnding2 = true;
 				default:
 					break;
 			}
-		
 		return visitChildren(ctx); }
 	
 	@Override 
-	public Void visitMeasure(@NotNull HelloParser.MeasureContext ctx) { 
+	public Song visitMeasure(@NotNull HelloParser.MeasureContext ctx) { 
 		MusicInMea = new ArrayList<Music>();
 		inMeasure = true;
 		visitChildren(ctx);
@@ -194,28 +217,38 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 				endings.add(measure);
 				inEnding2 = false;
 				Repeat Repeat = new Repeat(measures, endings);
-				meaOfSong.addAll(Repeat.getRepeat());
 				
+				meaOfSong.addAll(Repeat.getRepeat());
 				endings = new ArrayList<Measure>();
 				measures = new ArrayList<Measure>();
-				
-				System.out.println(meaOfSong.toString());
+			}else if(finishedRepition){
+				measures.add(measure);
+				Repeat repeat = new Repeat(measures);
+		
+				meaOfSong.addAll(repeat.getRepeat()); 
+				measures = new ArrayList<Measure>();
+				finishedRepition = false;
 			}else{
 				measures.add(measure);
 			}
+			
 			
 		return null;
 		}
 
 	@Override 
-	public Void visitMeasure_end(@NotNull HelloParser.Measure_endContext ctx) { 
+	public Song visitMeasure_end(@NotNull HelloParser.Measure_endContext ctx) { 
 		inMeasure = false;
+		String repeatEnd = ctx.MEASURE_END().getText();
+			if(repeatEnd.charAt(0)==':'&(!inEnding1)){
+				finishedRepition = true;	
+					}	
 		
 		return null; 
 		}
 	
 	@Override 
-	public Void visitNote_element(@NotNull HelloParser.Note_elementContext ctx) { 
+	public Song visitNote_element(@NotNull HelloParser.Note_elementContext ctx) { 
 		/*
 		 *Set for Note 
 		 */
@@ -344,7 +377,7 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 		}
 	
 	@Override 
-	public Void visitChord_element(@NotNull HelloParser.Chord_elementContext ctx) { 
+	public Song visitChord_element(@NotNull HelloParser.Chord_elementContext ctx) { 
 		chordNotes = new ArrayList<Note>();
 		InChords = true;
 		return visitChildren(ctx); 
@@ -352,7 +385,7 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 	
 	
 	@Override 
-	public Void visitClose_bracet(@NotNull HelloParser.Close_bracetContext ctx) { 
+	public Song visitClose_bracet(@NotNull HelloParser.Close_bracetContext ctx) { 
 		InChords = false;
 		Chord chord = new Chord(chordNotes);
 			if(inTuplet){
@@ -364,7 +397,7 @@ public class ASTvisitor extends HelloBaseVisitor <Void>{
 		}
 	
 	@Override 
-	public Void visitTuplet_element(@NotNull HelloParser.Tuplet_elementContext ctx) { 
+	public Song visitTuplet_element(@NotNull HelloParser.Tuplet_elementContext ctx) { 
 		inTuplet = true;
 		musicsInTuplet = new ArrayList<Music>();
 		switch (ctx.TUPLET_START().getText()) {

@@ -11,6 +11,8 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import music.Song;
+
 public class Main {
 
 	public static void main(String[] strings) throws IOException {
@@ -22,7 +24,8 @@ public class Main {
 		ParseTree tree = parser.abc_tune();
 		System.out.println(tree.toStringTree(parser));
 		ASTvisitor visitor  = new ASTvisitor();
-		visitor.visit(tree);
+		Song song = visitor.visit(tree);
+		System.out.println(song.toString());
 		}
 	
 	

@@ -1,5 +1,6 @@
 package music;
 
+import java.util.HashMap;
 import java.util.List;
 
 /*
@@ -16,15 +17,14 @@ import java.util.List;
 public class Song implements Sequence{
 	
 		private final Header header;
-		private final List<Voice> voices;
-		
+		private final HashMap<Integer, Voice> voices;
 		/**
 		 * Generate a new Song Object
 		 * @param header which contains field info such as index, composer, etc.
 		 * @param body refers to the Body datatype containing list of Voice
 		 */
 		
-		public Song(Header header, List<Voice> voices) {
+		public Song(Header header, HashMap<Integer, Voice> voices) {
 			this.header = header;
 			this.voices = voices;
 		}
@@ -40,9 +40,9 @@ public class Song implements Sequence{
 		
 		/**
 		 * Getter method of the voices in the music
-		 * @return list of voices
+		 * @return Hashmap of voices
 		 */
-		public List<Voice> getVoices(){
+		public HashMap<Integer, Voice> getVoices(){
 			return voices;
 		}
 		

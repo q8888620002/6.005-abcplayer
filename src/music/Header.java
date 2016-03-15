@@ -15,7 +15,7 @@ public class Header implements Sequence{
 	private final Duration meter;
 	private final int tempo;
 	private final String Key;
-	private final String voice;
+	private final int voice;
 	
 	
 	/**
@@ -31,7 +31,7 @@ public class Header implements Sequence{
 	 * @param K, determines the key signature for the piece, a Key obj 
 	 */
 	public Header(int X, String T,String C
-			,Duration L,Duration M,Integer Q,String V,String K){
+			,Duration L,Duration M,Integer Q,int V,String K){
 		
 		this.index = X;
 		this.title = T;
@@ -57,7 +57,7 @@ public class Header implements Sequence{
 		this.meter = M;
 		this.tempo = Q;
 		this.Key = K;
-		this.voice = null;
+		this.voice = 1;
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class Header implements Sequence{
 	 * @param all fields except composer 
 	 */
 	public Header(int X, String T
-			,Duration L,Duration M,Integer Q,String V,String K){
+			,Duration L,Duration M,Integer Q,int V,String K){
 		
 		this.index = X;
 		this.title = T;
@@ -74,7 +74,7 @@ public class Header implements Sequence{
 		this.meter = M;
 		this.tempo = Q;
 		this.Key = K;
-		this.voice = null;
+		this.voice = V;
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class Header implements Sequence{
 		this.meter = M;
 		this.tempo = Q;
 		this.Key = K;
-		this.voice = null;
+		this.voice = 1;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Header implements Sequence{
 	/**
 	 * @return Voices of Song
 	 */
-	public String getVoice() {
+	public int getVoice() {
 		return voice;
 	}
 	
