@@ -36,9 +36,9 @@ public class SequencePlayerTest {
 			 player.addNote(new Pitch('E').toMidiNote(), 60, 9);
 			 player.addNote(new Pitch('F').toMidiNote(), 69, 3);
 			 player.addNote(new Pitch('G').toMidiNote(), 72, 24);
-			 player.addNote(new Pitch('D').octaveTranspose(1).toMidiNote(), 96, 4);
-			 player.addNote(new Pitch('D').octaveTranspose(1).toMidiNote(), 100, 4);
-			 player.addNote(new Pitch('D').octaveTranspose(1).toMidiNote(), 104, 4);
+			 player.addNote(new Pitch('C').octaveTranspose(1).toMidiNote(), 96, 4);
+			 player.addNote(new Pitch('C').octaveTranspose(1).toMidiNote(), 100, 4);
+			 player.addNote(new Pitch('C').octaveTranspose(1).toMidiNote(), 104, 4);
 			 player.addNote(new Pitch('G').toMidiNote(), 108, 4);
 			 player.addNote(new Pitch('G').toMidiNote(), 112, 4);
 			 player.addNote(new Pitch('G').toMidiNote(), 116, 4);
@@ -53,6 +53,7 @@ public class SequencePlayerTest {
 			 player.addNote(new Pitch('G').toMidiNote(), 156, 9);
 			 player.addNote(new Pitch('G').toMidiNote(), 165, 3);
 			 player.addNote(new Pitch('G').toMidiNote(), 168, 24);
+			 System.out.println(player);
 			 player.play();
 			 
 		 } catch (MidiUnavailableException e) {
@@ -63,7 +64,7 @@ public class SequencePlayerTest {
 		 
 	}
 	
-	@Test
+	
 	public void piece2Test(){
 		SequencePlayer player;
 		try {

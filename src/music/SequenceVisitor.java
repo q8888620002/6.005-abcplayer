@@ -12,19 +12,21 @@ public class SequenceVisitor implements Visitor{
 	private int tempo;
 	private int TickPerQuater;
 	private int startTick = 0;
-	private SequencePlayer player ;
+	private int meter_numerator ;
+	private int meter_denominator;
+	private  SequencePlayer player ;
 
+	public void ConstructPlayer(SequencePlayer player,int TickPerQuarter ){
+				this.player = player;
+				TickPerQuater = TickPerQuarter;
+	}
+	
+	
+	@Override
 	public void visit(Song s) {
-		
-		/*
-		 * Construct tempo and TickTimePerQuarter of a   SequencePlayer
-		 */
-		tempo = s.getHeader().getTempo();
-		TickPerQuater = s.getTickTime();
-		
-		s.getVoices().get(1).accept(this);
-		System.err.println(s.getVoices().get(0).toString());
 		s.getHeader().accept(this);
+		tempo = s.getHeader().getTempo();
+		s.getVoices().get(1).accept(this);
 		
 	}
 
@@ -48,18 +50,24 @@ public class SequenceVisitor implements Visitor{
 	@Override
 	public void visit(Note n) {
 		// TODO Auto-generated method stub
-		int numTicks = n.getDuration().getNumerator()*TickPerQuater/
-				n.getDuration().getDenominator();
-		int frequency =n.getKey().getPitch().toMidiNote(); 
 		
-		player.addNote(frequency, startTick, numTicks);
+		
+		int numTicks = n.getDuration().getNumerator()*TickPerQuater*4/
+				n.getDuration().getDenominator();
+		
+		if(n.getKey()!=null){
+			int frequency =n.getKey().getPitch().toMidiNote(); 
+			
+			player.addNote(frequency, startTick, numTicks);
+		}
+		
 		startTick += numTicks;
 	}
 
 	@Override
 	public void visit(Chord c) {
 		// TODO Auto-generated method stub
-		int numTicks = c.getDuration().getNumerator()*TickPerQuater/
+		int numTicks = c.getDuration().getNumerator()*TickPerQuater*4/
 				c.getDuration().getDenominator();
 		
 		for(Note n: c.getNotes()){
@@ -78,22 +86,25 @@ public class SequenceVisitor implements Visitor{
 		}
 	}
 	
-	
-	public void play() throws MidiUnavailableException, InvalidMidiDataException{
-		 player = new SequencePlayer(tempo, TickPerQuater);	
-
-	}
 
 	@Override
 	public void visit(Header h) {
 		// TODO Auto-generated method stub
 		
 	}
-
+		
 	@Override
 	public void visit(Repeat r) {
 		// TODO Auto-generated method stub
 		
 	}
+	
+		
+	public SequencePlayer getPlayer(){
+		return player;
+	}
+	
+
+	
 	
 }

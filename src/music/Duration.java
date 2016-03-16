@@ -84,7 +84,7 @@ public class Duration {
 				if(((max*i)% min)==0){
 					int NewNumerator = ((max*i)/denominator)*numerator;
 					int NewDenominator = max*i;
-					return new Duration(NewNumerator,NewDenominator );
+					return new Duration(NewNumerator/other_deminator,NewDenominator );
 				}
 			}
 			return null;

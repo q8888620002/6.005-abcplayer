@@ -5,6 +5,8 @@ import java.util.HashMap;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
+import sound.SequencePlayer;
+
 
 /*
  * this is the immutable, a top class that represents an ABC music
@@ -22,6 +24,7 @@ public class Song implements Sequence{
 		private final Header header;
 		private final HashMap<Integer, Voice> voices;
 		private final int TickTime;
+		private SequencePlayer player;
 		/**
 		 * Generate a new Song Object
 		 * @param header which contains field info such as index, composer, etc.
@@ -56,15 +59,15 @@ public class Song implements Sequence{
 		}
 		
 		/**
-		 * method for visitor to process Song
-		 * @return 
+		 * 
+		 * @return  player that plays the music
+		 * @throws MidiUnavailableException
+		 * @throws InvalidMidiDataException
 		 */
-		@Override
-		public void accept(Visitor s) {
-			s.visit(voices.get(1));
+		public SequencePlayer player() throws MidiUnavailableException, InvalidMidiDataException{
+			player = new SequencePlayer(header.getTempo(), TickTime);
+			return player;
 		}
-		
-		
 		
 		/**
 		 * @return string representation of the Song
@@ -72,6 +75,12 @@ public class Song implements Sequence{
 		@Override 
 		public String toString(){
 			return header.toString()+"\n"+voices.toString();
+		}
+
+		@Override
+		public void accept(Visitor s) {
+			// TODO Auto-generated method stub
+			s.visit(this);
 		}
 		
 		

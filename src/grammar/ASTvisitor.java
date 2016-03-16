@@ -66,7 +66,7 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		 */
 		TickTime = TickTime/4;
 		song = new Song(header, Voices, TickTime);
-
+		
 			return song;
 		}
 	
