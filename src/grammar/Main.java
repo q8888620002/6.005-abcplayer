@@ -37,7 +37,8 @@ public class Main {
 				song.getTickTime()), song.getTickTime());
 		
 		visitor2.visit(song);
-		System.err.println(song.toString());
+		System.out.println(song.toString());
+		//System.err.println(visitor2.getPlayer().toString());
 		visitor2.getPlayer().play();
 		
 		}
