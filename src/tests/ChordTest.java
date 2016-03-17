@@ -1,8 +1,13 @@
-package music;
+package tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import music.Chord;
+import music.Duration;
+import music.Key;
+import music.Note;
 
 public class ChordTest {
 	@Test

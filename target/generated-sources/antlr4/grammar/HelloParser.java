@@ -669,18 +669,19 @@ public class HelloParser extends Parser {
 	public final Field_keyContext field_key() throws RecognitionException {
 		Field_keyContext _localctx = new Field_keyContext(_ctx, getState());
 		enterRule(_localctx, 20, RULE_field_key);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(96); match(FIELD_KEY);
 			setState(98);
-			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
-			case 1:
+			_la = _input.LA(1);
+			if (_la==EOL) {
 				{
 				setState(97); match(EOL);
 				}
-				break;
 			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -739,7 +740,7 @@ public class HelloParser extends Parser {
 				setState(103); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FIELD_VOICE) | (1L << NOTE) | (1L << BARLINE_START) | (1L << TUPLET_START) | (1L << OPEN_BRACET) | (1L << CLOSE_BRACET) | (1L << EOL) | (1L << WS))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FIELD_VOICE) | (1L << NOTE) | (1L << BARLINE_START) | (1L << TUPLET_START) | (1L << OPEN_BRACET) | (1L << CLOSE_BRACET) | (1L << WS))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -757,6 +758,7 @@ public class HelloParser extends Parser {
 		public Mid_tune_fieldContext mid_tune_field() {
 			return getRuleContext(Mid_tune_fieldContext.class,0);
 		}
+		public TerminalNode EOL() { return getToken(HelloParser.EOL, 0); }
 		public MeasureContext measure(int i) {
 			return getRuleContext(MeasureContext.class,i);
 		}
@@ -785,8 +787,11 @@ public class HelloParser extends Parser {
 	public final Abc_lineContext abc_line() throws RecognitionException {
 		Abc_lineContext _localctx = new Abc_lineContext(_ctx, getState());
 		enterRule(_localctx, 24, RULE_abc_line);
+		int _la;
 		try {
 			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
 			setState(111);
 			switch (_input.LA(1)) {
 			case NOTE:
@@ -794,9 +799,7 @@ public class HelloParser extends Parser {
 			case TUPLET_START:
 			case OPEN_BRACET:
 			case CLOSE_BRACET:
-			case EOL:
 			case WS:
-				enterOuterAlt(_localctx, 1);
 				{
 				setState(106); 
 				_errHandler.sync(this);
@@ -820,13 +823,21 @@ public class HelloParser extends Parser {
 				}
 				break;
 			case FIELD_VOICE:
-				enterOuterAlt(_localctx, 2);
 				{
 				setState(110); mid_tune_field();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
+			}
+			setState(114);
+			_la = _input.LA(1);
+			if (_la==EOL) {
+				{
+				setState(113); match(EOL);
+				}
+			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -876,20 +887,20 @@ public class HelloParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(114); 
+			setState(117); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(113); element();
+				setState(116); element();
 				}
 				}
-				setState(116); 
+				setState(119); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NOTE) | (1L << BARLINE_START) | (1L << TUPLET_START) | (1L << OPEN_BRACET) | (1L << CLOSE_BRACET) | (1L << EOL) | (1L << WS))) != 0) );
-			setState(118); measure_end();
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NOTE) | (1L << BARLINE_START) | (1L << TUPLET_START) | (1L << OPEN_BRACET) | (1L << CLOSE_BRACET) | (1L << WS))) != 0) );
+			setState(121); measure_end();
 			}
 		}
 		catch (RecognitionException re) {
@@ -905,7 +916,6 @@ public class HelloParser extends Parser {
 
 	public static class Measure_endContext extends ParserRuleContext {
 		public TerminalNode MEASURE_END() { return getToken(HelloParser.MEASURE_END, 0); }
-		public TerminalNode EOL() { return getToken(HelloParser.EOL, 0); }
 		public Measure_endContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -931,15 +941,7 @@ public class HelloParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120); match(MEASURE_END);
-			setState(122);
-			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
-			case 1:
-				{
-				setState(121); match(EOL);
-				}
-				break;
-			}
+			setState(123); match(MEASURE_END);
 			}
 		}
 		catch (RecognitionException re) {
@@ -981,12 +983,12 @@ public class HelloParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(124); match(FIELD_VOICE);
-			setState(126);
+			setState(125); match(FIELD_VOICE);
+			setState(127);
 			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
 				{
-				setState(125); match(EOL);
+				setState(126); match(EOL);
 				}
 				break;
 			}
@@ -1004,7 +1006,6 @@ public class HelloParser extends Parser {
 	}
 
 	public static class ElementContext extends ParserRuleContext {
-		public TerminalNode EOL() { return getToken(HelloParser.EOL, 0); }
 		public TerminalNode SPACE(int i) {
 			return getToken(HelloParser.SPACE, i);
 		}
@@ -1054,32 +1055,27 @@ public class HelloParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 			case 1:
 				{
-				setState(128); note_element();
+				setState(129); note_element();
 				}
 				break;
 			case 2:
 				{
-				setState(129); tuplet_element();
+				setState(130); tuplet_element();
 				}
 				break;
 			case 3:
 				{
-				setState(130); chord_element();
+				setState(131); chord_element();
 				}
 				break;
 			case 4:
 				{
-				setState(131); bar_line();
+				setState(132); bar_line();
 				}
 				break;
 			case 5:
 				{
-				setState(132); close_bracet();
-				}
-				break;
-			case 6:
-				{
-				setState(133); match(EOL);
+				setState(133); close_bracet();
 				}
 				break;
 			}
@@ -1319,7 +1315,6 @@ public class HelloParser extends Parser {
 		enterRule(_localctx, 40, RULE_tuplet_element);
 		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(162);
@@ -1331,38 +1326,64 @@ public class HelloParser extends Parser {
 			}
 
 			setState(164); match(TUPLET_START);
-			setState(167); 
-			_errHandler.sync(this);
-			_alt = 1;
-			do {
-				switch (_alt) {
-				case 1:
-					{
-					setState(167);
-					switch (_input.LA(1)) {
-					case OPEN_BRACET:
-					case WS:
-						{
-						setState(165); chord_element();
-						}
-						break;
-					case NOTE:
-						{
-						setState(166); note_element();
-						}
-						break;
-					default:
-						throw new NoViableAltException(this);
-					}
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
+			setState(167);
+			switch (_input.LA(1)) {
+			case OPEN_BRACET:
+			case WS:
+				{
+				setState(165); chord_element();
 				}
-				setState(169); 
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,24,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+				break;
+			case NOTE:
+				{
+				setState(166); note_element();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			setState(171);
+			switch (_input.LA(1)) {
+			case OPEN_BRACET:
+			case WS:
+				{
+				setState(169); chord_element();
+				}
+				break;
+			case NOTE:
+				{
+				setState(170); note_element();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			setState(175);
+			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
+			case 1:
+				{
+				setState(173); chord_element();
+				}
+				break;
+			case 2:
+				{
+				setState(174); note_element();
+				}
+				break;
+			}
+			setState(179);
+			switch ( getInterpreter().adaptivePredict(_input,26,_ctx) ) {
+			case 1:
+				{
+				setState(177); chord_element();
+				}
+				break;
+			case 2:
+				{
+				setState(178); note_element();
+				}
+				break;
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -1401,18 +1422,19 @@ public class HelloParser extends Parser {
 	public final Bar_lineContext bar_line() throws RecognitionException {
 		Bar_lineContext _localctx = new Bar_lineContext(_ctx, getState());
 		enterRule(_localctx, 42, RULE_bar_line);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(171); match(BARLINE_START);
-			setState(173);
-			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
-			case 1:
+			setState(181); match(BARLINE_START);
+			setState(183);
+			_la = _input.LA(1);
+			if (_la==EOL) {
 				{
-				setState(172); match(EOL);
+				setState(182); match(EOL);
 				}
-				break;
 			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -1427,7 +1449,7 @@ public class HelloParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3(\u00b2\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3(\u00bc\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\3\2\6\2\60\n\2\r\2"+
@@ -1435,52 +1457,57 @@ public class HelloParser extends Parser {
 		"\4\3\4\3\4\5\4E\n\4\3\5\3\5\5\5I\n\5\3\6\3\6\5\6M\n\6\3\7\3\7\5\7Q\n\7"+
 		"\3\b\3\b\5\bU\n\b\3\t\3\t\5\tY\n\t\3\n\3\n\5\n]\n\n\3\13\3\13\5\13a\n"+
 		"\13\3\f\3\f\5\fe\n\f\3\r\6\rh\n\r\r\r\16\ri\3\16\6\16m\n\16\r\16\16\16"+
-		"n\3\16\5\16r\n\16\3\17\6\17u\n\17\r\17\16\17v\3\17\3\17\3\20\3\20\5\20"+
-		"}\n\20\3\21\3\21\5\21\u0081\n\21\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u0089"+
+		"n\3\16\5\16r\n\16\3\16\5\16u\n\16\3\17\6\17x\n\17\r\17\16\17y\3\17\3\17"+
+		"\3\20\3\20\3\21\3\21\5\21\u0082\n\21\3\22\3\22\3\22\3\22\3\22\5\22\u0089"+
 		"\n\22\3\22\7\22\u008c\n\22\f\22\16\22\u008f\13\22\3\23\3\23\3\24\5\24"+
 		"\u0094\n\24\3\24\3\24\7\24\u0098\n\24\f\24\16\24\u009b\13\24\3\24\3\24"+
-		"\3\24\5\24\u00a0\n\24\3\25\3\25\3\26\5\26\u00a5\n\26\3\26\3\26\3\26\6"+
-		"\26\u00aa\n\26\r\26\16\26\u00ab\3\27\3\27\5\27\u00b0\n\27\3\27\2\2\30"+
-		"\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,\2\2\u00bc\2/\3\2\2\2\4"+
-		"\65\3\2\2\2\6D\3\2\2\2\bF\3\2\2\2\nJ\3\2\2\2\fN\3\2\2\2\16R\3\2\2\2\20"+
-		"V\3\2\2\2\22Z\3\2\2\2\24^\3\2\2\2\26b\3\2\2\2\30g\3\2\2\2\32q\3\2\2\2"+
-		"\34t\3\2\2\2\36z\3\2\2\2 ~\3\2\2\2\"\u0088\3\2\2\2$\u0090\3\2\2\2&\u0093"+
-		"\3\2\2\2(\u00a1\3\2\2\2*\u00a4\3\2\2\2,\u00ad\3\2\2\2.\60\5\4\3\2/.\3"+
-		"\2\2\2\60\61\3\2\2\2\61/\3\2\2\2\61\62\3\2\2\2\62\63\3\2\2\2\63\64\5\30"+
-		"\r\2\64\3\3\2\2\2\65\66\5\b\5\2\66:\5\n\6\2\679\5\6\4\28\67\3\2\2\29<"+
-		"\3\2\2\2:8\3\2\2\2:;\3\2\2\2;=\3\2\2\2<:\3\2\2\2=>\5\26\f\2>\5\3\2\2\2"+
-		"?E\5\f\7\2@E\5\20\t\2AE\5\16\b\2BE\5\22\n\2CE\5\24\13\2D?\3\2\2\2D@\3"+
-		"\2\2\2DA\3\2\2\2DB\3\2\2\2DC\3\2\2\2E\7\3\2\2\2FH\7\3\2\2GI\7\36\2\2H"+
-		"G\3\2\2\2HI\3\2\2\2I\t\3\2\2\2JL\7\4\2\2KM\7\36\2\2LK\3\2\2\2LM\3\2\2"+
-		"\2M\13\3\2\2\2NP\7\5\2\2OQ\7\36\2\2PO\3\2\2\2PQ\3\2\2\2Q\r\3\2\2\2RT\7"+
-		"\6\2\2SU\7\36\2\2TS\3\2\2\2TU\3\2\2\2U\17\3\2\2\2VX\7\t\2\2WY\7\36\2\2"+
-		"XW\3\2\2\2XY\3\2\2\2Y\21\3\2\2\2Z\\\7\b\2\2[]\7\36\2\2\\[\3\2\2\2\\]\3"+
+		"\3\24\5\24\u00a0\n\24\3\25\3\25\3\26\5\26\u00a5\n\26\3\26\3\26\3\26\5"+
+		"\26\u00aa\n\26\3\26\3\26\5\26\u00ae\n\26\3\26\3\26\5\26\u00b2\n\26\3\26"+
+		"\3\26\5\26\u00b6\n\26\3\27\3\27\5\27\u00ba\n\27\3\27\2\2\30\2\4\6\b\n"+
+		"\f\16\20\22\24\26\30\32\34\36 \"$&(*,\2\2\u00c9\2/\3\2\2\2\4\65\3\2\2"+
+		"\2\6D\3\2\2\2\bF\3\2\2\2\nJ\3\2\2\2\fN\3\2\2\2\16R\3\2\2\2\20V\3\2\2\2"+
+		"\22Z\3\2\2\2\24^\3\2\2\2\26b\3\2\2\2\30g\3\2\2\2\32q\3\2\2\2\34w\3\2\2"+
+		"\2\36}\3\2\2\2 \177\3\2\2\2\"\u0088\3\2\2\2$\u0090\3\2\2\2&\u0093\3\2"+
+		"\2\2(\u00a1\3\2\2\2*\u00a4\3\2\2\2,\u00b7\3\2\2\2.\60\5\4\3\2/.\3\2\2"+
+		"\2\60\61\3\2\2\2\61/\3\2\2\2\61\62\3\2\2\2\62\63\3\2\2\2\63\64\5\30\r"+
+		"\2\64\3\3\2\2\2\65\66\5\b\5\2\66:\5\n\6\2\679\5\6\4\28\67\3\2\2\29<\3"+
+		"\2\2\2:8\3\2\2\2:;\3\2\2\2;=\3\2\2\2<:\3\2\2\2=>\5\26\f\2>\5\3\2\2\2?"+
+		"E\5\f\7\2@E\5\20\t\2AE\5\16\b\2BE\5\22\n\2CE\5\24\13\2D?\3\2\2\2D@\3\2"+
+		"\2\2DA\3\2\2\2DB\3\2\2\2DC\3\2\2\2E\7\3\2\2\2FH\7\3\2\2GI\7\36\2\2HG\3"+
+		"\2\2\2HI\3\2\2\2I\t\3\2\2\2JL\7\4\2\2KM\7\36\2\2LK\3\2\2\2LM\3\2\2\2M"+
+		"\13\3\2\2\2NP\7\5\2\2OQ\7\36\2\2PO\3\2\2\2PQ\3\2\2\2Q\r\3\2\2\2RT\7\6"+
+		"\2\2SU\7\36\2\2TS\3\2\2\2TU\3\2\2\2U\17\3\2\2\2VX\7\t\2\2WY\7\36\2\2X"+
+		"W\3\2\2\2XY\3\2\2\2Y\21\3\2\2\2Z\\\7\b\2\2[]\7\36\2\2\\[\3\2\2\2\\]\3"+
 		"\2\2\2]\23\3\2\2\2^`\7\7\2\2_a\7\36\2\2`_\3\2\2\2`a\3\2\2\2a\25\3\2\2"+
 		"\2bd\7\n\2\2ce\7\36\2\2dc\3\2\2\2de\3\2\2\2e\27\3\2\2\2fh\5\32\16\2gf"+
 		"\3\2\2\2hi\3\2\2\2ig\3\2\2\2ij\3\2\2\2j\31\3\2\2\2km\5\34\17\2lk\3\2\2"+
 		"\2mn\3\2\2\2nl\3\2\2\2no\3\2\2\2or\3\2\2\2pr\5 \21\2ql\3\2\2\2qp\3\2\2"+
-		"\2r\33\3\2\2\2su\5\"\22\2ts\3\2\2\2uv\3\2\2\2vt\3\2\2\2vw\3\2\2\2wx\3"+
-		"\2\2\2xy\5\36\20\2y\35\3\2\2\2z|\7\13\2\2{}\7\36\2\2|{\3\2\2\2|}\3\2\2"+
-		"\2}\37\3\2\2\2~\u0080\7\7\2\2\177\u0081\7\36\2\2\u0080\177\3\2\2\2\u0080"+
-		"\u0081\3\2\2\2\u0081!\3\2\2\2\u0082\u0089\5(\25\2\u0083\u0089\5*\26\2"+
-		"\u0084\u0089\5&\24\2\u0085\u0089\5,\27\2\u0086\u0089\5$\23\2\u0087\u0089"+
-		"\7\36\2\2\u0088\u0082\3\2\2\2\u0088\u0083\3\2\2\2\u0088\u0084\3\2\2\2"+
-		"\u0088\u0085\3\2\2\2\u0088\u0086\3\2\2\2\u0088\u0087\3\2\2\2\u0089\u008d"+
-		"\3\2\2\2\u008a\u008c\7#\2\2\u008b\u008a\3\2\2\2\u008c\u008f\3\2\2\2\u008d"+
-		"\u008b\3\2\2\2\u008d\u008e\3\2\2\2\u008e#\3\2\2\2\u008f\u008d\3\2\2\2"+
-		"\u0090\u0091\7\24\2\2\u0091%\3\2\2\2\u0092\u0094\7%\2\2\u0093\u0092\3"+
-		"\2\2\2\u0093\u0094\3\2\2\2\u0094\u0095\3\2\2\2\u0095\u0099\7\23\2\2\u0096"+
-		"\u0098\5(\25\2\u0097\u0096\3\2\2\2\u0098\u009b\3\2\2\2\u0099\u0097\3\2"+
-		"\2\2\u0099\u009a\3\2\2\2\u009a\u009c\3\2\2\2\u009b\u0099\3\2\2\2\u009c"+
-		"\u009d\5$\23\2\u009d\u009f\3\2\2\2\u009e\u00a0\7%\2\2\u009f\u009e\3\2"+
-		"\2\2\u009f\u00a0\3\2\2\2\u00a0\'\3\2\2\2\u00a1\u00a2\7\f\2\2\u00a2)\3"+
-		"\2\2\2\u00a3\u00a5\7%\2\2\u00a4\u00a3\3\2\2\2\u00a4\u00a5\3\2\2\2\u00a5"+
-		"\u00a6\3\2\2\2\u00a6\u00a9\7\20\2\2\u00a7\u00aa\5&\24\2\u00a8\u00aa\5"+
-		"(\25\2\u00a9\u00a7\3\2\2\2\u00a9\u00a8\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab"+
-		"\u00a9\3\2\2\2\u00ab\u00ac\3\2\2\2\u00ac+\3\2\2\2\u00ad\u00af\7\17\2\2"+
-		"\u00ae\u00b0\7\36\2\2\u00af\u00ae\3\2\2\2\u00af\u00b0\3\2\2\2\u00b0-\3"+
-		"\2\2\2\34\61:DHLPTX\\`dinqv|\u0080\u0088\u008d\u0093\u0099\u009f\u00a4"+
-		"\u00a9\u00ab\u00af";
+		"\2rt\3\2\2\2su\7\36\2\2ts\3\2\2\2tu\3\2\2\2u\33\3\2\2\2vx\5\"\22\2wv\3"+
+		"\2\2\2xy\3\2\2\2yw\3\2\2\2yz\3\2\2\2z{\3\2\2\2{|\5\36\20\2|\35\3\2\2\2"+
+		"}~\7\13\2\2~\37\3\2\2\2\177\u0081\7\7\2\2\u0080\u0082\7\36\2\2\u0081\u0080"+
+		"\3\2\2\2\u0081\u0082\3\2\2\2\u0082!\3\2\2\2\u0083\u0089\5(\25\2\u0084"+
+		"\u0089\5*\26\2\u0085\u0089\5&\24\2\u0086\u0089\5,\27\2\u0087\u0089\5$"+
+		"\23\2\u0088\u0083\3\2\2\2\u0088\u0084\3\2\2\2\u0088\u0085\3\2\2\2\u0088"+
+		"\u0086\3\2\2\2\u0088\u0087\3\2\2\2\u0089\u008d\3\2\2\2\u008a\u008c\7#"+
+		"\2\2\u008b\u008a\3\2\2\2\u008c\u008f\3\2\2\2\u008d\u008b\3\2\2\2\u008d"+
+		"\u008e\3\2\2\2\u008e#\3\2\2\2\u008f\u008d\3\2\2\2\u0090\u0091\7\24\2\2"+
+		"\u0091%\3\2\2\2\u0092\u0094\7%\2\2\u0093\u0092\3\2\2\2\u0093\u0094\3\2"+
+		"\2\2\u0094\u0095\3\2\2\2\u0095\u0099\7\23\2\2\u0096\u0098\5(\25\2\u0097"+
+		"\u0096\3\2\2\2\u0098\u009b\3\2\2\2\u0099\u0097\3\2\2\2\u0099\u009a\3\2"+
+		"\2\2\u009a\u009c\3\2\2\2\u009b\u0099\3\2\2\2\u009c\u009d\5$\23\2\u009d"+
+		"\u009f\3\2\2\2\u009e\u00a0\7%\2\2\u009f\u009e\3\2\2\2\u009f\u00a0\3\2"+
+		"\2\2\u00a0\'\3\2\2\2\u00a1\u00a2\7\f\2\2\u00a2)\3\2\2\2\u00a3\u00a5\7"+
+		"%\2\2\u00a4\u00a3\3\2\2\2\u00a4\u00a5\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6"+
+		"\u00a9\7\20\2\2\u00a7\u00aa\5&\24\2\u00a8\u00aa\5(\25\2\u00a9\u00a7\3"+
+		"\2\2\2\u00a9\u00a8\3\2\2\2\u00aa\u00ad\3\2\2\2\u00ab\u00ae\5&\24\2\u00ac"+
+		"\u00ae\5(\25\2\u00ad\u00ab\3\2\2\2\u00ad\u00ac\3\2\2\2\u00ae\u00b1\3\2"+
+		"\2\2\u00af\u00b2\5&\24\2\u00b0\u00b2\5(\25\2\u00b1\u00af\3\2\2\2\u00b1"+
+		"\u00b0\3\2\2\2\u00b1\u00b2\3\2\2\2\u00b2\u00b5\3\2\2\2\u00b3\u00b6\5&"+
+		"\24\2\u00b4\u00b6\5(\25\2\u00b5\u00b3\3\2\2\2\u00b5\u00b4\3\2\2\2\u00b5"+
+		"\u00b6\3\2\2\2\u00b6+\3\2\2\2\u00b7\u00b9\7\17\2\2\u00b8\u00ba\7\36\2"+
+		"\2\u00b9\u00b8\3\2\2\2\u00b9\u00ba\3\2\2\2\u00ba-\3\2\2\2\36\61:DHLPT"+
+		"X\\`dinqty\u0081\u0088\u008d\u0093\u0099\u009f\u00a4\u00a9\u00ad\u00b1"+
+		"\u00b5\u00b9";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

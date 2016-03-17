@@ -18,7 +18,6 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
-import sound.SequencePlayer;
 
 public class Tuplet implements Music,Sequence{
 	private final  List<Music> musics;

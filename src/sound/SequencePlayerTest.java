@@ -17,7 +17,7 @@ import org.junit.Test;
 
 public class SequencePlayerTest {
 
-	@Test
+
 	public void piece1Test() throws IOException{
 		List<String> l= fromFile("piece1.abc");
 		System.out.println(l);
@@ -53,8 +53,9 @@ public class SequencePlayerTest {
 			 player.addNote(new Pitch('G').toMidiNote(), 156, 9);
 			 player.addNote(new Pitch('G').toMidiNote(), 165, 3);
 			 player.addNote(new Pitch('G').toMidiNote(), 168, 24);
-			 System.out.println(player);
+			  System.out.println(player.toString());
 			 player.play();
+		
 			 
 		 } catch (MidiUnavailableException e) {
 			e.printStackTrace();
@@ -64,7 +65,7 @@ public class SequencePlayerTest {
 		 
 	}
 	
-	
+	@Test
 	public void piece2Test(){
 		SequencePlayer player;
 		try {
@@ -114,6 +115,7 @@ public class SequencePlayerTest {
 			player.addNote(new Pitch('C').octaveTranspose(1).toMidiNote(), 246, 6);
 			player.addNote(new Pitch('D').octaveTranspose(1).toMidiNote(), 252, 6);
 			player.addNote(new Pitch('B').toMidiNote(), 258, 9);
+			System.err.println(player.toString());
 			player.play();
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();

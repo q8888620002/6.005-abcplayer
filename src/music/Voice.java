@@ -10,7 +10,6 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
-import sound.SequencePlayer;
 
 public class Voice implements Sequence{
 		private final List <Measure> musics;

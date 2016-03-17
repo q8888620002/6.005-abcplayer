@@ -32,20 +32,20 @@ FIELD_KEY: 'K:'(WS)*BASENOTE  KEY_ACCIDENTAL? MODE_MINOR?(WS)* ;
 
 
 abc_music : abc_line+;
-abc_line : measure+| mid_tune_field ;
+abc_line : (measure+| mid_tune_field)(EOL)? ;
 measure:  element+ measure_end;
-measure_end: MEASURE_END (EOL)? ;
+measure_end: MEASURE_END  ;
 MEASURE_END: (WS?)('|' | '||' |':|'| '|]' )(WS?) ;
 
 
 mid_tune_field: FIELD_VOICE (EOL)?;
 
 element : (note_element |tuplet_element |chord_element|
-	bar_line |close_bracet|EOL)(SPACE*);
+	bar_line |close_bracet)(SPACE*);
 close_bracet: CLOSE_BRACET;
 chord_element: (WS)? (OPEN_BRACET note_element* close_bracet) (WS)?;
 note_element: NOTE ;
-tuplet_element:  (WS)? TUPLET_START (chord_element|note_element)+;
+tuplet_element:  (WS)? TUPLET_START (chord_element|note_element)(chord_element|note_element)(chord_element|note_element)?(chord_element|note_element)?;
 
 bar_line : BARLINE_START (EOL)? ; 
 

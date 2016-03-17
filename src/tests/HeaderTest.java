@@ -1,6 +1,9 @@
-package music;
+package tests;
 
 import org.junit.Test;
+
+import music.Duration;
+import music.Header;
 
 public class HeaderTest {
 	

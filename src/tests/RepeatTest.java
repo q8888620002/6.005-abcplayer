@@ -1,4 +1,4 @@
-package music;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+
+import music.Chord;
+import music.Duration;
+import music.Key;
+import music.Measure;
+import music.Music;
+import music.Note;
+import music.Repeat;
+import music.Tuplet;
+import music.TupletType;
 
 public class RepeatTest {
 	Key bKey = new Key('B');

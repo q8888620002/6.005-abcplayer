@@ -11,7 +11,6 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
-import sound.SequencePlayer;
 
 public class Repeat implements Sequence{
 	/**

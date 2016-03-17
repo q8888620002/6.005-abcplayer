@@ -21,7 +21,7 @@ import sound.SequencePlayer;
 public class Main {
 
 	public static void main(String[] strings) throws IOException, MidiUnavailableException, InvalidMidiDataException {
-		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("little_night_music.abc"));
+		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("scale.abc"));
 		HelloLexer lexer = new HelloLexer(inputStream);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		HelloParser parser = new HelloParser(tokens);
@@ -31,14 +31,14 @@ public class Main {
 		ASTvisitor visitor  = new ASTvisitor();
 		Song song = visitor.visit(tree);
 		
-		System.out.println(song.toString());
+		SequenceVisitor visitor2 = new SequenceVisitor();
 		
-		SequenceVisitor visitor2= new SequenceVisitor();
 		visitor2.ConstructPlayer(new SequencePlayer(song.getHeader().getTempo(),
 				song.getTickTime()), song.getTickTime());
+		
 		visitor2.visit(song);
+		System.err.println(song.toString());
 		visitor2.getPlayer().play();
-		//System.err.println(visitor2.getPlayer());
 		
 		}
 	

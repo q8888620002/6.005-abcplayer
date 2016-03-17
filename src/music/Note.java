@@ -1,6 +1,5 @@
 package music;
 
-import sound.Pitch;
 
 
 /*
@@ -16,6 +15,8 @@ public class Note implements Music,Sequence{
 		 * @param key of the note.
 		 * @param duration of the note.
 		 */
+		
+		
 		public Note(Key key, Duration duration){
 			this.key = key;
 			this.duration = duration;
@@ -64,9 +65,11 @@ public class Note implements Music,Sequence{
 		public void accept(Visitor s) {
 			s.visit(this);
 		}
+		
 		/**
 		 * @return a String representation of this note/rest
 		 */
+		
 		public String toString() {
 			if(key!=null){
 				return key.toString()+ duration.toString();

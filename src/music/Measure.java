@@ -3,7 +3,6 @@ package music;
 import java.util.ArrayList;
 import java.util.List;
 
-import sound.SequencePlayer;
 
 /*
  *  A Measure is composed a group of music elements such as Notes, Chords, Tuplet.

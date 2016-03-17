@@ -1,7 +1,5 @@
 package music;
 
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiUnavailableException;
 
 import sound.SequencePlayer;
 
@@ -9,11 +7,9 @@ import sound.SequencePlayer;
  * the interface that all visitor have to implement
  */
 public class SequenceVisitor implements Visitor{
-	private int tempo;
+
 	private int TickPerQuater;
-	private int startTick = 0;
-	private int meter_numerator ;
-	private int meter_denominator;
+	private int startTick ;
 	private  SequencePlayer player ;
 
 	public void ConstructPlayer(SequencePlayer player,int TickPerQuarter ){
@@ -25,8 +21,11 @@ public class SequenceVisitor implements Visitor{
 	@Override
 	public void visit(Song s) {
 		s.getHeader().accept(this);
-		tempo = s.getHeader().getTempo();
-		s.getVoices().get(1).accept(this);
+		
+		for(int i = 1; i < s.getVoices().size()+1;i++){
+			startTick =0;
+			s.getVoices().get(i).accept(this);
+		}
 		
 	}
 

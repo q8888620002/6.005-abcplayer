@@ -1,8 +1,14 @@
-package music;
+package tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import music.Duration;
+import music.Key;
+import music.Note;
+import music.Tuplet;
+import music.TupletType;
 
 public class TupletTest {
 	

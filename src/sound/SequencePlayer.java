@@ -25,9 +25,11 @@ public class SequencePlayer {
     private static int DEFAULT_VELOCITY = 100; // the volume
 
     private void checkRep() {
-        assert sequencer != null : "sequencer should be non-null";
+        
+    	assert sequencer != null : "sequencer should be non-null";
         assert track != null : "track should be non-null";
         assert beatsPerMinute >= 0 : "should be positive number of beats per minute";
+        
     }
 
     /**
@@ -166,7 +168,7 @@ public class SequencePlayer {
             // create a new player, with 120 beats (i.e. quarter note) per
             // minute, with 2 tick per quarter note
             player = new SequencePlayer(120, 2);
-
+            
             player.addNote(new Pitch('C').toMidiNote(), 0, 1);
             player.addNote(new Pitch('D').toMidiNote(), 1, 1);
             player.addNote(new Pitch('E').toMidiNote(), 2, 1);

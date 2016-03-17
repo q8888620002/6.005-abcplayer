@@ -74,7 +74,13 @@ public class Song implements Sequence{
 		 */
 		@Override 
 		public String toString(){
-			return header.toString()+"\n"+voices.toString();
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append(header.toString());
+			for(int i=1;i< voices.size()+1;i++){
+				stringBuilder.append("V:"+i);
+				stringBuilder.append(voices.get(i).toString());
+			}
+			return stringBuilder.toString();
 		}
 
 		@Override

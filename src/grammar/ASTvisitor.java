@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+import org.antlr.runtime.tree.Tree;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import music.Chord;
@@ -40,25 +40,40 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	private Boolean InChords = false;
 	private Boolean inTuplet = false;
 	private Boolean inMeasure = false;
+
 	private List<Note> chordNotes;
 	private List<Music> musicsInTuplet;
 	private List<Music> MusicInMea;
 	private HashMap<Integer, Voice> Voices;
+	private HashMap<Integer, List<Measure>> MeasInVoice;
+	private HashMap<Integer, List<Measure>> meaInMeas;
+	private HashMap<Integer, List<Measure>> Endings;
+	private HashMap<Integer, List<Measure>> Rp;
 	private List<Measure> meaOfSong = new ArrayList<Measure>();
-	private List<Measure> endings = new ArrayList<Measure>();
-	private List<Measure> measures = new ArrayList<Measure>();
-	private List<Measure> Repeat = new ArrayList<Measure>();
-	private Boolean inEnding1 = false;
-	private Boolean inEnding2 = false;
-	private TupletType Type;
-	private boolean finishedRepition;
 	
+	private HashMap<Integer, Boolean> inEndings1 ;
+	private HashMap<Integer, Boolean> inEndings2 ;
+	
+	private TupletType Type;
+	private HashMap<Integer, Boolean> finishRepition;
+	private HashMap<Integer, Boolean> startRepition;
 	@Override 
 	public Song visitAbc_tune(@NotNull HelloParser.Abc_tuneContext ctx) {
 		/*
 		 * visit header
 		 */
 		Voices = new HashMap<Integer, Voice>();
+		MeasInVoice = new HashMap<Integer, List<Measure>>();
+		inEndings1 = new HashMap<Integer, Boolean>();
+		inEndings2 = new HashMap<Integer, Boolean>();
+		finishRepition = new HashMap<Integer, Boolean>();
+		startRepition = new HashMap<Integer, Boolean>();
+		Endings= new HashMap<Integer, List<Measure>>();
+		Rp = new HashMap<Integer, List<Measure>>();
+		meaInMeas = new HashMap<Integer, List<Measure>>();
+		
+		
+		
 		visit(ctx.getChild(0));
 		visit(ctx.getChild(1));
 		/*
@@ -136,11 +151,18 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	
 	@Override 
 	public Song visitField_voice(@NotNull HelloParser.Field_voiceContext ctx) {
-		
+
 		voiceNum += 1;
-	
-		return visitChildren(ctx); 
-		
+		inEndings1.put(voiceNum, false);
+		inEndings2.put(voiceNum, false);
+		finishRepition.put(voiceNum, false);
+		startRepition.put(voiceNum,false);
+		Endings.put(voiceNum,new ArrayList<Measure>());
+		MeasInVoice.put(voiceNum, new ArrayList<Measure>());
+		meaInMeas.put(voiceNum,  new ArrayList<Measure>());
+		Rp.put(voiceNum, new ArrayList<Measure>());
+		currentVoice = 1;
+		return null; 
 	}
 
 		
@@ -178,22 +200,33 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 			 * if header contains no voice fields information.
 			 */
 			voiceNum+=1;
-			currentVoice = voiceNum;
-			visitChildren(ctx);
-			meaOfSong.addAll(measures);
-			Voice v = new Voice(meaOfSong,voiceNum);
-			Voices.put(voiceNum, v);
 			
-		}else if(voiceNum == 1){
+			currentVoice = voiceNum;
+			inEndings1.put(voiceNum, false);
+			inEndings2.put(voiceNum, false);
+			finishRepition.put(voiceNum, false);
+			startRepition.put(voiceNum,false);
+			Endings.put(voiceNum,new ArrayList<Measure>());
+			MeasInVoice.put(voiceNum, new ArrayList<Measure>());
+			meaInMeas.put(voiceNum,  new ArrayList<Measure>());
+			Rp.put(voiceNum, new ArrayList<Measure>());
+			
+			visitChildren(ctx);
+			MeasInVoice.get(voiceNum).addAll(meaInMeas.get(currentVoice));
+			Voice v = new Voice(MeasInVoice.get(voiceNum),currentVoice);
+			
+			Voices.put(currentVoice, v);
+			
+		}else{
 			/*
 			 * header with V:1
 			 */
-			
-			currentVoice = voiceNum;
+			meaInMeas.put(currentVoice, new ArrayList<Measure>());
 			visitChildren(ctx);
-			meaOfSong.addAll(measures);
-			Voice v = new Voice(meaOfSong,voiceNum);
-			Voices.put(voiceNum, v);
+			MeasInVoice.get(currentVoice).addAll(meaInMeas.get(currentVoice));
+			
+			Voice v = new Voice(MeasInVoice.get(currentVoice),currentVoice);
+			Voices.put(currentVoice, v);
 		}
 		
 		return null;
@@ -201,20 +234,20 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	
 	@Override 
 	public Song visitMid_tune_field(@NotNull HelloParser.Mid_tune_fieldContext ctx) {
-		
-		
-		
+		currentVoice = Integer.parseInt(ctx.FIELD_VOICE().getText().replaceAll("[^\\d]", ""));
 		return visitChildren(ctx); }
 	
-	@Override 
+	@Override 	
 	public Song visitBar_line(@NotNull HelloParser.Bar_lineContext ctx) { 
 
 			switch (ctx.BARLINE_START().getText().replaceAll("[\\s]", "").charAt(1)) {
 				case '1':
-					inEnding1 = true;
+					inEndings1.put(currentVoice, true);
 					break;
 				case '2':
-					inEnding2 = true;
+					inEndings2.put(currentVoice, true);
+				case ':':
+					startRepition.put(currentVoice, true);
 				default:
 					break;
 			}
@@ -228,27 +261,32 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		
 		Measure measure = new Measure(MusicInMea);
 		
-			if(inEnding1){
-				endings.add(measure);
-				inEnding1 = false;
-			}else if(inEnding2){
-				endings.add(measure);
-				inEnding2 = false;
-				Repeat Repeat = new Repeat(measures, endings);
+			if(inEndings1.get(currentVoice)){
+				Endings.get(currentVoice).add(measure);
+				inEndings1.put(currentVoice,false); 
 				
-				meaOfSong.addAll(Repeat.getRepeat());
-				endings = new ArrayList<Measure>();
-				measures = new ArrayList<Measure>();
-			}else if(finishedRepition){
-				measures.add(measure);
-				Repeat repeat = new Repeat(measures);
-		
-				meaOfSong.addAll(repeat.getRepeat()); 
-				measures = new ArrayList<Measure>();
-				finishedRepition = false;
+			}else if(inEndings2.get(currentVoice)){
+				Endings.get(currentVoice).add(measure);
+				inEndings2.put(currentVoice,false); 
+				
+				Repeat Repeat = new Repeat(meaInMeas.get(currentVoice), Endings.get(currentVoice));
+				
+				MeasInVoice.get(currentVoice).addAll(Repeat.getRepeat());
+				
+				Endings.put(currentVoice,new ArrayList<Measure>());
+				meaInMeas.put(currentVoice, new ArrayList<Measure>());
+				
+			}else if(finishRepition.get(currentVoice)){
+				
+				meaInMeas.get(currentVoice).add(measure);
+				Repeat repeat = new Repeat(meaInMeas.get(currentVoice));
+				
+				MeasInVoice.get(currentVoice).addAll(repeat.getRepeat()); 
+				meaInMeas.put(currentVoice, new ArrayList<Measure>());
+				finishRepition.put(currentVoice, false);
+				
 			}else{
-				measures.add(measure);
-				
+				meaInMeas.get(currentVoice).add(measure);
 			}
 			
 			
@@ -259,10 +297,11 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	public Song visitMeasure_end(@NotNull HelloParser.Measure_endContext ctx) { 
 		inMeasure = false;
 		String repeatEnd = ctx.MEASURE_END().getText();
-			if(repeatEnd.charAt(0)==':'&(!inEnding1)){
-				finishedRepition = true;	
+			if(repeatEnd.charAt(0)==':'&(!inEndings1.get(currentVoice))){
+				finishRepition.put(currentVoice, true);
 					}	
 		
+			
 		return null; 
 		}
 	
@@ -317,8 +356,6 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 					duration = new Duration(numerator,
 							denominator*2);
 						GetLCD(denominator*2);	
-						
-						
 				}
 			}else{
 				/*
