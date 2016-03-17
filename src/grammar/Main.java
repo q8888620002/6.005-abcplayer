@@ -21,7 +21,7 @@ import sound.SequencePlayer;
 public class Main {
 
 	public static void main(String[] strings) throws IOException, MidiUnavailableException, InvalidMidiDataException {
-		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("scale.abc"));
+		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("invention.abc"));
 		HelloLexer lexer = new HelloLexer(inputStream);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		HelloParser parser = new HelloParser(tokens);
@@ -38,7 +38,7 @@ public class Main {
 		
 		visitor2.visit(song);
 		System.out.println(song.toString());
-		//System.err.println(visitor2.getPlayer().toString());
+		System.err.println(visitor2.getPlayer().toString());
 		visitor2.getPlayer().play();
 		
 		}

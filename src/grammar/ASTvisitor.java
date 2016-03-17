@@ -114,9 +114,13 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	public Song visitField_meter(@NotNull HelloParser.Field_meterContext ctx) { 
 			String[] fraction = ctx.FIELD_METER()
 					.getText().replace("M:","").replace("\n","").trim().split("/");
+			
+			if(fraction.length==2){
+				meter = new Duration(Integer.parseInt(fraction[0]),Integer.parseInt(fraction[1]));
+			}else{
 				if(fraction[0].length() == 1){
 					/*
-					 * Meter :C
+					 * Meter :C 
 					 */
 						meter = new Duration(4,4);
 					}else if(fraction[0].length() == 2){
@@ -124,9 +128,8 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 						 * Meter :C|
 						 */
 						meter = new Duration(2,2);
-					}else{
-						meter = new Duration(Integer.parseInt(fraction[0]),Integer.parseInt(fraction[1]));
-				}		
+					}
+			}
 			return visitChildren(ctx); 
 			}
 	
@@ -466,10 +469,16 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		 note = new Note(key,duration);
 		}
 		
-			if(InChords){
+			if(InChords&!inTuplet){
 				chordNotes.add(note);
 			}else if((inTuplet)&(!InChords)){
+				Duration TupletDura = new Duration(1,meter.getDenominator());
+				note = new Note(note.getKey(), TupletDura);
 				musicsInTuplet.add(note);
+			}else if (InChords&inTuplet) {
+				Duration TupletDura = new Duration(1,meter.getDenominator());
+				note = new Note(note.getKey(), TupletDura);
+				chordNotes.add(note);
 			}else{
 				if(inMeasure){
 					MusicInMea.add(note);

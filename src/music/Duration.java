@@ -80,11 +80,12 @@ public class Duration {
 				max = denominator;
 				min = other_deminator;
 			}
+			
 			for(int i=1;i <= min ; i++){
 				if(((max*i)% min)==0){
 					int NewNumerator = ((max*i)/denominator)*numerator;
 					int NewDenominator = max*i;
-					return new Duration(NewNumerator/other_deminator,NewDenominator );
+					return new Duration(NewNumerator,NewDenominator*other_deminator );
 				}
 			}
 			return null;
