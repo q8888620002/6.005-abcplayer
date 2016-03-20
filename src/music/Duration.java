@@ -99,14 +99,5 @@ public class Duration {
 			return numerator+"/"+denominator;
 		}
 		
-		/**
-		 * 
-		 */
-		public Boolean equals(Duration otherDura){
-			if((denominator== otherDura.getDenominator())&(numerator==otherDura.getNumerator())){
-				return true;
-			}else{
-				return false;
-			}
-		}
+		
 }

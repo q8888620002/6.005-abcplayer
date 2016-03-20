@@ -7,7 +7,7 @@ package music;
  * 			It is immutable.
  * 			all the fields are final. 
  */
-public class Header implements Sequence{
+public class Header {
 
 	private final int index;
 	private final String title;
@@ -138,14 +138,7 @@ public class Header implements Sequence{
 		return voice;
 	}
 	
-	/**
-	 * method for visitor to process the object 
-	 * @return 
-	 */
-	public void accept(Visitor v) {
-		v.visit(this);
 
-	}
 	
 	
 	/**

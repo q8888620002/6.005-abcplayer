@@ -4,9 +4,9 @@ package grammar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
-import org.antlr.runtime.tree.Tree;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import music.Chord;
@@ -32,8 +32,8 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 	private String Composer;
 	private Duration meter;
 	private Duration length;
-	private int tempo = 0;
-	private int voiceNum = 0;
+	private int tempo;
+	private int voiceNum;
 	private int currentVoice;
 	private int TickTime;
 	private String key;
@@ -61,6 +61,9 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		/*
 		 * visit header
 		 */
+		
+		tempo = 0;
+		voiceNum = 0;
 		Voices = new HashMap<Integer, Voice>();
 		MeasOfSong = new HashMap<Integer, List<Measure>>();
 		inEndings1 = new HashMap<Integer, Boolean>();
@@ -160,9 +163,9 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 		finishRepition.put(voiceNum, false);
 		startRepition.put(voiceNum,false);
 		Endings.put(voiceNum,new ArrayList<Measure>());
-		MeasOfSong.put(voiceNum, new ArrayList<Measure>());
-		MeaInLine.put(voiceNum,  new ArrayList<Measure>());
-		Rp.put(voiceNum, new ArrayList<Measure>());
+		MeasOfSong.put(voiceNum, new LinkedList<Measure>());
+		MeaInLine.put(voiceNum,  new LinkedList<Measure>());
+		Rp.put(voiceNum, new LinkedList<Measure>());
 		currentVoice = 1;
 		return null; 
 	}
@@ -221,9 +224,9 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 			finishRepition.put(voiceNum, false);
 			startRepition.put(voiceNum,false);
 			Endings.put(voiceNum,new ArrayList<Measure>());
-			MeasOfSong.put(voiceNum, new ArrayList<Measure>());
-			MeaInLine.put(voiceNum,  new ArrayList<Measure>());
-			Rp.put(voiceNum, new ArrayList<Measure>());
+			MeasOfSong.put(voiceNum, new LinkedList<Measure>());
+			MeaInLine.put(voiceNum,  new LinkedList<Measure>());
+			Rp.put(voiceNum, new LinkedList<Measure>());
 			
 			visitChildren(ctx);
 			MeasOfSong.get(voiceNum).addAll(MeaInLine.get(currentVoice));
@@ -232,10 +235,8 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 			Voices.put(currentVoice, v);
 			
 		}else{
-			/*
-			 * header with V:1
-			 */
-			MeaInLine.put(currentVoice, new ArrayList<Measure>());
+			
+			MeaInLine.put(currentVoice,  new LinkedList<Measure>());
 			visitChildren(ctx);
 			Rp.get(currentVoice).addAll(MeaInLine.get(currentVoice));
 
@@ -264,7 +265,7 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 				case 2:
 					startRepition.put(currentVoice, true);
 					MeasOfSong.get(currentVoice).addAll(Rp.get(currentVoice));
-					Rp.put(currentVoice, new ArrayList<Measure>());
+					Rp.put(currentVoice, new LinkedList<Measure>());
 				default:
 					break;
 			}
@@ -294,8 +295,8 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 				MeasOfSong.get(currentVoice).addAll(Repeat.getRepeat());
 				
 				Endings.put(currentVoice,new ArrayList<Measure>());
-				MeaInLine.put(currentVoice, new ArrayList<Measure>());
-				Rp.put(currentVoice, new ArrayList<Measure>());
+				MeaInLine.put(currentVoice,  new LinkedList<Measure>());
+				Rp.put(currentVoice, new LinkedList<Measure>());
 				
 			}else if(finishRepition.get(currentVoice))
 			{
@@ -311,8 +312,8 @@ public class ASTvisitor extends HelloBaseVisitor <Song>{
 				
 				MeasOfSong.get(currentVoice).addAll(repeat.getRepeat()); 
 				
-				MeaInLine.put(currentVoice, new ArrayList<Measure>());
-				Rp.put(currentVoice, new ArrayList<Measure>());
+				MeaInLine.put(currentVoice, new LinkedList<Measure>());
+				Rp.put(currentVoice, new LinkedList<Measure>());
 				
 				startRepition.put(currentVoice, false);
 				finishRepition.put(currentVoice, false);

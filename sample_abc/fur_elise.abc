@@ -5,12 +5,12 @@ V:1
 V:2
 M:3/8
 L:1/16
-Q:140
+Q:120
 K:Am
 V:1
-|:e^d|e^deB=dc|A2 z CEA|B2 z E^GB|c2 z Ee^d|
+e^d|e^deB=dc|A2 z CEA|B2 z E^GB|c2 z Ee^d|
 V:2
-|:z2|z6|A,,E,A, z z2|E,,E,^G, z z2|A,,E,A, z z2|
+z2|z6|A,,E,A, z z2|E,,E,^G, z z2|A,,E,A, z z2|
 %
 V:1
 e^deB=dc|A2 z CEA|B2 z EcB|[1A2 z2:|[2A2z Bcd|

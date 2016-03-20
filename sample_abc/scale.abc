@@ -1,8 +1,18 @@
 X:1
 T:Simple scale
 C:Unknown
-M:4/4
-L:1/4
+V:1
+V:2
+M:3/8
+L:1/16
 Q:120
 K:C
-|:C D E F | G A B c | c B A G F E D C :|
+V:1
+[E2B2] z2 z2|(3A,CE (3Ace (3dcB|(3Ace (3ac'e' (3d'c'b|(3Ace (3ac'e' (3d'c'b|
+V:2
+[E,2^G,2] z2 z2|A,,,2 z2 [A,2C2E2]|[A,2C2E2] z2 [A,2C2E2]|[A,2C2E2] z2 [A,2C2E2]|
+%
+V:1
+(3_ba_a (3g_gf (3e_ed|(3_d'c'b (3_ba_b (3g_gf|e^deB=dc|A2 z CEA|
+V:2
+[A,2C2E2] z2 z2|z6|z6|A,,E,A, z z2|

@@ -1,10 +1,13 @@
 package grammar;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -21,7 +24,7 @@ import sound.SequencePlayer;
 public class Main {
 
 	public static void main(String[] strings) throws IOException, MidiUnavailableException, InvalidMidiDataException {
-		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("invention.abc"));
+		ANTLRInputStream inputStream = new ANTLRInputStream(fromFile("fur_elise.abc"));
 		HelloLexer lexer = new HelloLexer(inputStream);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		HelloParser parser = new HelloParser(tokens);
@@ -37,8 +40,6 @@ public class Main {
 				song.getTickTime()), song.getTickTime());
 		
 		visitor2.visit(song);
-		System.out.println(song.toString());
-		System.err.println(visitor2.getPlayer().toString());
 		visitor2.getPlayer().play();
 		
 		}
@@ -46,12 +47,13 @@ public class Main {
 	
 	public static String fromFile(String fileName) throws IOException{
 		File newFile = new File("sample_abc/", fileName );
-		List<String> lines = Files.readAllLines(Paths.get(newFile.getAbsolutePath())
-				, StandardCharsets.UTF_8);
-		String ABCmusic ="";
-		for(int index= 0; index< lines.size();index++ ){
-			ABCmusic+=lines.get(index)+System.lineSeparator();
-		}	
-		return ABCmusic;
+		BufferedReader bReader = new BufferedReader(new FileReader(newFile));
+		StringBuilder lines = new StringBuilder();
+		String line;
+		while((line = bReader.readLine())!=null){
+			lines.append(line).append("\n");
+		}
+		bReader.close();
+		return lines.toString();
 	}
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Repeat implements Sequence{
+public class Repeat {
 	/**
 	 *    meas represents the common part of the repetition
      *    ending means the alternative ending measures
@@ -53,16 +53,6 @@ public class Repeat implements Sequence{
 	 */
 	public List<Measure> getRepeat(){
 		return meas;
-	}
-	
-	/**
-	 *  Allows a visitor to process the object
-	 * @return 
-	 */
-	@Override
-	public void accept(Visitor visitor) {
-		visitor.visit(this);
-		
 	}
 	
 	/**

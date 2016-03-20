@@ -53,14 +53,17 @@ public class Song implements Sequence{
 		public HashMap<Integer, Voice> getVoices(){
 			return voices;
 		}
-		
+		/**
+		 *  Getter of the TickTime per Quarter of a Song
+		 * @return Ticktime
+		 */
 		public int getTickTime(){
 			return TickTime;
 		}
 		
 		/**
-		 * 
-		 * @return  player that plays the music
+		 * Construct a player with the tempo and tick time a quarter provided by the Song
+		 * @return  player that can plays the music
 		 * @throws MidiUnavailableException
 		 * @throws InvalidMidiDataException
 		 */
@@ -82,7 +85,10 @@ public class Song implements Sequence{
 			}
 			return stringBuilder.toString();
 		}
-
+		
+		/**
+		 * Visitor method for visitor to process a Song
+		 */
 		@Override
 		public void accept(Visitor s) {
 			// TODO Auto-generated method stub

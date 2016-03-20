@@ -1,5 +1,7 @@
 package music;
-
+/*
+ * Enum for the tuplet type
+ */
 public enum TupletType {
 	/**
 	 *  the three types of tuplet
